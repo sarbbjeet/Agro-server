@@ -12,7 +12,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className="text-red-300">this is my country </h1>
+        <h1 className="text-red-300">this is my thjeu</h1>
       </main>
     </div>
   );

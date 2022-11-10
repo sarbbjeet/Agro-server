@@ -2,9 +2,9 @@ const colors = {
   p1: "#181F26",
   p2: "#101318",
   p3: "#103D49",
-  p4: "8295AA", //gray
-  p5: "69F0AE", //green
-  p5: "E1630E", //yellow
+  p4: "#8295AA", //gray
+  p5: "#69F0AE", //green
+  p6: "#E1630E", //yellow
   primary: "#00D28D",
   secondary: "#0E89FF",
   secondary_hover: "#0E89CC",
@@ -22,4 +22,5 @@ const fontFamily = {
   f4: "Roboto, sans-serif",
 };
 
-export { fontFamily, fontSize, colors };
+module.exports = { fontFamily, fontSize, colors };
+// export { fontFamily, fontSize, colors };

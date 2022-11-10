@@ -22,7 +22,7 @@ export default function AppNav() {
           top: 0,
           backgroundColor: colors.p1,
           // borderBottom: "2px solid red",
-          boxShadow: "1px 1px 2px rgba(0, 0,0, 0.1)",
+          boxShadow: "1px 1px 2px rgba(0, 0,0, 0.9)",
         }}
         className="nav-container slow_7s shadow-md w-100"
       >
@@ -77,23 +77,16 @@ export default function AppNav() {
                     </a>
                   </Link>
                 </li>
-                <li className="float-left position-relative has_sub mx-2">
+
+                <li className="float-left position-relative mx-2 has_sub ">
                   <a
                     className={`${styles.linkFont} btn btn-outline-dark border-0 py-3`}
-                    href="#"
                   >
-                    Approved Vehicles
+                    Guide
                   </a>
-                  <ul
-                    style={{
-                      backgroundColor: "rgba(0, 0, 0,0.9)",
-                      left: "50%",
-                      top: "100%",
-                    }}
-                    className="list-unstyled position-absolute slow_3s shadow-8dp"
-                  >
-                    <li className="w-100">
-                      <Link href="/vehicles/search?vehicle_type=car">
+                  <ul className="list-unstyled position-absolute slow_3s shadow-8dp">
+                    <li className="list-inline-item">
+                      <Link href="/about/page">
                         <a
                           className={`${styles.linkFont} btn btn-dark w-100 text-left py-3`}
                           title=""
@@ -103,7 +96,7 @@ export default function AppNav() {
                             className="d-flex align-items-center"
                           >
                             <Image
-                              src="/images/icons/car (1).png"
+                              src="/images/app.png"
                               width="40px"
                               height="40px"
                               objectFit="center"
@@ -111,14 +104,14 @@ export default function AppNav() {
                               alt=""
                             />
                             <span className={`nested-nav ml-2 text-white`}>
-                              Used Cars
+                              app
                             </span>
                           </div>
                         </a>
                       </Link>
                     </li>
-                    <li className="w-100">
-                      <Link href="/vehicles/search?vehicle_type=van">
+                    <li className="list-inline-item">
+                      <Link href="/about/reviews">
                         <a
                           className={`${styles.linkFont} btn btn-dark w-100 text-left py-3`}
                           title=""
@@ -128,19 +121,42 @@ export default function AppNav() {
                             className="d-flex align-items-center"
                           >
                             <Image
-                              src="/images/icons/van.png"
-                              width="35px"
-                              height="35px"
+                              src="/images/gateway.png"
+                              width="40px"
+                              height="40px"
+                              objectFit="center"
                               color="white"
                               alt=""
                             />
                             <span className={`nested-nav ml-2 text-white`}>
-                              Used Vans
+                              gateway
                             </span>
                           </div>
-
-                          {/* <i className="fas fa-chevron-right mr-2"></i> Approved
-                          Vans */}
+                        </a>
+                      </Link>
+                    </li>
+                    <li className="list-inline-item">
+                      <Link href="/about/reviews">
+                        <a
+                          className={`${styles.linkFont} btn btn-dark w-100 text-left py-3`}
+                          title=""
+                        >
+                          <div
+                            style={{ whiteSpace: "nowrap" }}
+                            className="d-flex align-items-center"
+                          >
+                            <Image
+                              src="/images/node.png"
+                              width="40px"
+                              height="40px"
+                              objectFit="center"
+                              color="white"
+                              alt=""
+                            />
+                            <span className={`nested-nav ml-2 text-white`}>
+                              node module
+                            </span>
+                          </div>
                         </a>
                       </Link>
                     </li>
@@ -157,75 +173,14 @@ export default function AppNav() {
                   </Link>
                 </li> */}
 
-                <li className="float-left position-relative has_sub mx-2">
-                  <a
-                    className={`${styles.linkFont} btn btn-outline-dark border-0 py-3`}
-                    href="#"
-                  >
-                    Workshop
-                  </a>
-                  <ul className="overflow-scroll list-unstyled position-absolute slow_3s shadow-8dp">
-                    {workshop_list.map((item, i) => (
-                      <li className="w-100" key={i}>
-                        <Link href={`/workshop?query=${item?.name}`}>
-                          <a
-                            className={`${styles.linkFont} btn btn-dark w-100 text-left py-2`}
-                            title=""
-                          >
-                            <div
-                              style={{ whiteSpace: "nowrap" }}
-                              className="d-flex align-items-center"
-                            >
-                              <Image
-                                src={item?.image}
-                                width="35px"
-                                height="35px"
-                                color="white"
-                                alt="image"
-                              />
-                              <span className={`nested-nav ml-2 text-white`}>
-                                {item?.name}
-                              </span>
-                            </div>
-                            {/* <i className="fas fa-chevron-right mr-2"></i> {item} */}
-                          </a>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-                <li className="float-left position-relative has_sub mx-2">
-                  <a
-                    className={`${styles.linkFont} btn btn-outline-dark border-0 py-3`}
-                    title="about"
-                    href="#"
-                  >
-                    About
-                  </a>
-
-                  <ul className="list-unstyled position-absolute slow_3s shadow-8dp">
-                    <li className="list-inline-item">
-                      <Link href="/about/page">
-                        <a
-                          className={`${styles.linkFont} btn btn-dark w-100 text-left py-3`}
-                          title=""
-                        >
-                          <i className="fas fa-chevron-right mr-2"></i> About Us
-                        </a>
-                      </Link>
-                    </li>
-                    <li className="list-inline-item">
-                      <Link href="/about/reviews">
-                        <a
-                          className={`${styles.linkFont} btn btn-dark w-100 text-left py-3`}
-                          title=""
-                        >
-                          <i className="fas fa-chevron-right mr-2"></i> Customer
-                          Reviews
-                        </a>
-                      </Link>
-                    </li>
-                  </ul>
+                <li className="float-left position-relative mx-2">
+                  <Link title="" href="/about">
+                    <a
+                      className={`${styles.linkFont} btn btn-outline-dark border-0 py-3`}
+                    >
+                      About Us
+                    </a>
+                  </Link>
                 </li>
                 <li className="float-left mx-2">
                   <Link title="" href="/contact">
@@ -295,7 +250,7 @@ export default function AppNav() {
 
             .nested-nav {
               font-family: ${ff};
-              font-weight: 700 !important;
+              font-weight: 600 !important;
             }
             .logo-container {
               cursor: pointer;
@@ -303,7 +258,7 @@ export default function AppNav() {
               height: 50px;
               position: absolute;
               margin-top: 10px;
-              box-shadow: 0.5px 0.5px 1px 1px rgba(0, 0, 0, 0.1);
+              // box-shadow: 0.5px 0.5px 1px 1px rgba(0, 0, 0, 0.1);
             }
 
             @media (max-width: 1200px) {

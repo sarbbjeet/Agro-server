@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import Banner from "../components/Banner";
 import Banner1 from "../components/Banner1";
 import Layout from "../components/Layout";
 import { colors } from "../utils/constants";
@@ -19,7 +20,7 @@ export default function Home() {
             zIndex: 1,
           }}
         >
-          <div style={{ height: "400px" }}></div>
+          <Banner />
           {/* <Banner1 /> */}
         </div>
       </main>

@@ -4,7 +4,7 @@ const colors = {
   p3: "#103D49",
   p4: "#8295AA", //gray
   p5: "#69F0AE", //green
-  p6: "#E1630E", //yellow
+  p6: "#D1630E", //yellow
   primary: "#00D28D",
   secondary: "#0E89FF",
   secondary_hover: "#0E89CC",

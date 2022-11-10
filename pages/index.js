@@ -8,29 +8,17 @@ import { colors } from "../utils/constants";
 export default function Home() {
   return (
     <Layout>
-      <main
-        className="main-container"
-        style={{ background: colors.p2, height: "100vh" }}
-      >
-        <div
-          style={{
-            width: "100%",
-            overflow: "auto",
-            position: "relative",
-            zIndex: 1,
-          }}
-        >
+      <main className="main-container bg-custom-p1-dark">
+        <div className="flex items-center" style={{ height: "90vh" }}>
           <Banner />
-          {/* <Banner1 /> */}
         </div>
       </main>
-
       <style jsx>
         {`
           .main-container {
             position: relative;
             z-index: 1;
-            padding-top: 60px;
+            padding-top: 70px;
           }
         `}
       </style>

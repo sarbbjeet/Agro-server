@@ -15,25 +15,25 @@ export default function ContactHeader() {
               <li className="float-left">
                 <a
                   className="text btn btn-dark"
-                  href="tel:+44792-768-4797"
+                  href="tel:+44781-67-8509"
                   title="Phone"
                 >
-                  <i className="fas fa-phone-alt"></i> (44) 7927684797
+                  <i className="fas fa-phone-alt"></i> (44) 7881678509
                 </a>
               </li>
               <li className="float-left">
                 <a
                   className="text btn btn-dark"
-                  href="https://wa.me/0447927684797"
+                  href="https://wa.me/0447881678509"
                   title="Whatsapp"
                 >
-                  <i className="fab fa-whatsapp"></i> (44) 7927684797
+                  <i className="fab fa-whatsapp"></i> (44) 7881678509
                 </a>
               </li>
 
               <li className="float-left" onClick={() => setCloseWindow(true)}>
                 <a className="text btn btn-dark" href="#" title="E-mail">
-                  <i className="far fa-envelope"></i> contact@allmotorsltd.co.uk
+                  <i className="far fa-envelope"></i> contact@mycodehub.co.uk
                 </a>
               </li>
             </ul>

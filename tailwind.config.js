@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 const { colors } = require("./utils/constants");
+const _colors = require("tailwindcss/colors");
 const { p1, p2, p3, p4, p5, p6 } = colors;
 module.exports = {
   content: [
@@ -16,6 +17,20 @@ module.exports = {
         p4,
         p5,
         p6,
+        transparent: "transparent",
+        current: "currentColor",
+        white: "#ffffff",
+        light: "#eee",
+        purple: "#3f3cbb",
+        midnight: "#121063",
+        metal: "#565584",
+        tahiti: "#3ab7bf",
+        silver: "#ecebff",
+        "bubble-gum": "#ff77e9",
+        bermuda: "#78dcca",
+        "p1-dark": "#1a1F26",
+        "p6-dark": "#F1630E", //yellow
+        primary: "#0E89FF",
       },
     },
     extend: {},

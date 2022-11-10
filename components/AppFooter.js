@@ -20,7 +20,7 @@ export default function AppFooter() {
               Get In Touch
             </p>
             <span>
-              All Motors Ltd <br />
+              Agriculture Monitoring System <br />
               Camps industrial <br />
               estates Kirknewton <br />
               EH27 8DF
@@ -46,8 +46,7 @@ export default function AppFooter() {
                     className="btn btn-block btn-dark text-left border-0 px-1"
                     title=""
                   >
-                    <i className="fas fa-angle-double-right"></i> Vehicles
-                    Search
+                    <i className="fas fa-angle-double-right"></i> login
                   </a>
                 </Link>
               </li>
@@ -57,7 +56,7 @@ export default function AppFooter() {
                     className="btn btn-block btn-dark text-left border-0 px-1"
                     title=""
                   >
-                    <i className="fas fa-angle-double-right"></i> Finance
+                    <i className="fas fa-angle-double-right"></i> Guide
                   </a>
                 </Link>
               </li>
@@ -90,19 +89,19 @@ export default function AppFooter() {
               <li className="list-inline-item w-100">
                 <a
                   className="btn btn-block btn-dark text-left border-0 px-1"
-                  href="tel:+44792-768-4797"
+                  href="tel:+44788-167-8509"
                   title="Phone"
                 >
-                  <i className="fas fa-phone-alt mr-2"></i> (44) 7927684797
+                  <i className="fas fa-phone-alt mr-2"></i> (44) 7881678509
                 </a>
               </li>
               <li className="list-inline-item w-100">
                 <a
                   className="btn btn-block  btn-dark text-left border-0 px-1"
-                  href="https://wa.me/0447927684797"
+                  href="https://wa.me/0447881678509"
                   title="Whatsapp"
                 >
-                  <i className="fab fa-whatsapp mr-2"></i> (44) 7927684797
+                  <i className="fab fa-whatsapp mr-2"></i> (44) 7881678509
                 </a>
               </li>
               <li
@@ -115,7 +114,7 @@ export default function AppFooter() {
                   title="E-mail"
                 >
                   <i className="far fa-envelope mr-2"></i>
-                  contact@allmotorsltd.co.uk
+                  contact@mycodehub.co.uk
                 </a>
               </li>
               <li className="list-inline-item w-100">
@@ -195,13 +194,12 @@ export default function AppFooter() {
           </div> */}
         </div>
 
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <header className="header-tag">
             <h4>Company Info</h4>
           </header>
 
           <span className="company-registration">
-            {/* VAT No. 249 8202 86 */}
             Company No. SC602887
             <span className="space" />
             FCA No. 970414
@@ -216,11 +214,11 @@ export default function AppFooter() {
             you finance for your purchase. Only these providers&apos; financial
             products are available from us.
           </span>
-        </div>
+        </div> */}
       </div>
-      <div className="content_copy bg-primary text-light text-center py-3">
+      <div className="content_copy bg-custom-p2 text-light text-center py-3">
         <div className="container text_small">
-          AllMotorsLtd © 2022. All rights reserved.
+          mycodehub © 2022. All rights reserved.
         </div>
       </div>
 

@@ -191,6 +191,17 @@ export default function AppNav() {
                     </a>
                   </Link>
                 </li>
+
+                <li className="float-left">
+                  <Link title="" href="/login">
+                    <a
+                      className={`${styles.linkFont} btn btn-outline-dark border-0 py-3`}
+                    >
+                      <i className="fas fa-user px-2"></i>
+                      Login
+                    </a>
+                  </Link>
+                </li>
               </ul>
             </div>
 

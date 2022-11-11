@@ -9,7 +9,7 @@ export default function login() {
     <Layout>
       <main className="bg-custom-p1-dark text-custom-light">
         <div
-          style={{ height: "90vh" }}
+          style={{ minHeight: "90vh", height: "700px" }}
           className="flex container main-container items-center"
         >
           <div className="flex-1 relative h-3/5 overflow-hidden">
@@ -18,7 +18,7 @@ export default function login() {
               objectFit="cover"
             />
           </div>
-          <div className="flex-1 h-3/5 flex justify-end p-0">
+          <div className="flex-1 h-3/5 flex justify-end">
             <div
               className="border-2 h-full md:w-4/6 w-full border-custom-p4  p-4 flex flex-col justify-center"
               style={{ borderWidth: 1 / 2 }}

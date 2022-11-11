@@ -3,16 +3,21 @@ import React from "react";
 import Layout from "../components/Layout";
 import { colors } from "../utils/constants";
 import { f2 as ff, f3 } from "../styles/variables.module.scss";
+import { height } from "@mui/system";
 
 export default function login() {
   return (
     <Layout>
       <main className="bg-custom-p1-dark text-custom-light">
         <div
-          style={{ height: "90vh" }}
+          //   style={{ minHeight: "90vh" }}
+          style={{ minHeight: "90vh", height: "700px" }}
           className="flex container main-container items-center"
         >
-          <div className="flex-1 relative h-5/6 justify-center flex overflow-hidden pt-4">
+          <div
+            className="flex-1 relative justify-center flex overflow-hidden h-3/5"
+            // style={{ height: "670px" }}
+          >
             <Image
               src={require("../public/images/login1.jpg")}
               objectFit="cover"
@@ -22,9 +27,9 @@ export default function login() {
               style={{ backgroundColor: "rgba(0,0,0,0.2)" }}
             ></div>
           </div>
-          <div className="flex-1 flex justify-end h-5/6 pt-4">
+          <div className="flex-1 flex justify-end h-3/5 pb-2">
             <div
-              className="h-full md:w-4/6 w-full p-4 flex flex-col justify-center"
+              className="h-full md:w-4/6 w-full p-4 flex flex-col justify-center border-custom-p4"
               style={{ borderWidth: 1 / 2 }}
             >
               <div className="header-text flex justify-between my-2">
@@ -38,7 +43,7 @@ export default function login() {
                   or <a href="/login">Sign in </a>
                 </div>
               </div>
-              <div className="relative text-center flex justify-center py-2">
+              {/* <div className="relative text-center flex justify-center py-2">
                 <div className="cursor-pointer">
                   <Image
                     src={require("../public/images/no-image.jpg")}
@@ -48,7 +53,7 @@ export default function login() {
                     style={{ borderRadius: "50%" }}
                   />
                 </div>
-              </div>
+              </div> */}
 
               <section>
                 <form>

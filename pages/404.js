@@ -7,9 +7,8 @@ export default function FourOhFour() {
   return (
     <Layout>
       <div className="body-container">
-        <h4>404 - Page Not Found</h4>
+        <h4> 404 - Page Not Found </h4>
       </div>
-
       <style jsx>
         {`
           h4 {

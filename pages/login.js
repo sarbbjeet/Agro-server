@@ -1,27 +1,78 @@
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import { colors } from "../utils/constants";
 import { f2 as ff, f3 } from "../styles/variables.module.scss";
+import { useAuth } from "../auth/authProvider";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
-export default function login() {
+export default function LoginForm() {
+  const { login, user, isAuthenticated } = useAuth();
+  const router = useRouter();
+  const [authenticate, setAuthenticate] = useState({
+    email: "",
+    password: "",
+    error: false,
+    msg: "",
+  });
+
+  useEffect(() => {
+    if (isAuthenticated) router.push("/");
+  }, [isAuthenticated]);
+  const initialState = () => {
+    setAuthenticate((currentState) => ({
+      ...currentState,
+      email: "",
+      password: "",
+    }));
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const { email, password } = authenticate;
+    const res = await login(email, password);
+    if (res.error)
+      setAuthenticate((currentState) => ({
+        ...currentState,
+        error: true,
+        msg: res.msg,
+      }));
+    else {
+      setAuthenticate((currentState) => ({
+        ...currentState,
+        error: false,
+        msg: res.msg,
+      }));
+      //reset inputs
+      initialState();
+    }
+  };
+  const onChange = ({ target: { name, value } }) => {
+    setAuthenticate((currentState) => ({
+      ...currentState,
+      error: false,
+      msg: "",
+      [name]: value,
+    }));
+  };
   return (
     <Layout>
       <main className="bg-custom-p1-dark text-custom-light">
         <div
           style={{ minHeight: "90vh", height: "700px" }}
-          className="flex container main-container items-center"
+          className="flex container main-container items-center justify-center"
         >
-          <div className="flex-1 relative h-3/5 overflow-hidden">
+          <div className="relative flex justify-center overflow-hidden w-3/6 h-3/5">
             <Image
               src={require("../public/images/iot.jpg")}
               objectFit="cover"
             />
           </div>
-          <div className="flex-1 h-3/5 flex justify-end">
+          <div className="h-3/5 flex justify-end lg:w-2/6 w-3/6">
             <div
-              className="border-2 h-full md:w-4/6 w-full border-custom-p4  p-4 flex flex-col justify-center"
-              style={{ borderWidth: 1 / 2 }}
+              className="border-2 h-full lg:w-6/6 lg:m-0 ml-2 w-full  p-4 flex flex-col justify-center"
+              style={{ borderWidth: 2, borderColor: "rgba(50,50,50,0.6)" }}
             >
               <div className="header-text flex justify-between my-2">
                 <div
@@ -31,7 +82,7 @@ export default function login() {
                   Sign in
                 </div>
                 <div className="">
-                  or <a href="/register">Create an account</a>
+                  or <Link href="/register">Create an account</Link>
                 </div>
               </div>
               <div className="flex p-2 justify-center items-center text-center rounded my-2 cursor-pointer bg-custom-purple hover:bg-custom-primary shadow-md">
@@ -44,24 +95,42 @@ export default function login() {
               </div>
               <div className="relative text-center">
                 <div className="bg-custom-p4 my-4" style={{ height: 1 }} />
-                <label className="absolute top-3 px-2  bg-custom-p1-dark left-44 text-custom-p4">
+                <label className="-translate-x-5 absolute top-3 px-2  bg-custom-p1-dark left-50 text-custom-p4">
                   or
                 </label>
               </div>
 
               <section>
-                <form>
+                {authenticate?.msg.length > 0 && (
+                  <div
+                    className={`p-1 ${
+                      authenticate?.error ? "alert-danger" : "alert-info"
+                    }`}
+                  >
+                    {authenticate?.msg}
+                  </div>
+                )}
+                <form method="post" onSubmit={onSubmit}>
                   <div className="flex">
                     <input
                       placeholder="Email"
-                      type="text"
+                      name="email"
+                      required
+                      value={authenticate?.email}
+                      onChange={onChange}
+                      type="email"
                       className="w-full p-2 my-2 rounded text-custom-p2"
                     />
                   </div>
                   <div>
                     <input
+                      value={authenticate?.password}
+                      onChange={onChange}
                       placeholder="Password"
                       type="password"
+                      name="password"
+                      required
+                      minLength={6}
                       security="true"
                       className="w-full p-2 my-2 rounded text-custom-p2"
                     />

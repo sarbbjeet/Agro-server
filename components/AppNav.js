@@ -8,6 +8,7 @@ import styles from "../styles/AppNav.module.scss";
 import { f2 as ff } from "../styles/variables.module.scss";
 
 import { workshop_list } from "../utils/variables";
+import ProfileDropdown from "./ProfileDropdown";
 const Wrapper = styled.div``;
 
 export default function AppNav() {
@@ -192,16 +193,7 @@ export default function AppNav() {
                   </Link>
                 </li>
 
-                <li className="float-left">
-                  <Link title="" href="/login">
-                    <a
-                      className={`${styles.linkFont} btn btn-outline-dark border-0 py-3`}
-                    >
-                      <i className="fas fa-user px-2"></i>
-                      Login
-                    </a>
-                  </Link>
-                </li>
+                <ProfileDropdown />
               </ul>
             </div>
 

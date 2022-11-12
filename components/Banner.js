@@ -33,8 +33,12 @@ export default function Banner() {
           </div>
         </div>
       </div>
-      <div className="flex-1 flex h-3/5 bg-custom-p6 relative shadow rounded ">
-        <Image src={require("../public/images/f2.jpg")} objectFit="cover" />
+      <div className="flex-1 flex h-3/5 relative shadow rounded transition-all ">
+        <Image
+          priority
+          src={require("../public/images/f2.jpg")}
+          objectFit="cover"
+        />
       </div>
 
       <style jsx>

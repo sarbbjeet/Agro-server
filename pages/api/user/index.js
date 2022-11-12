@@ -44,9 +44,11 @@ export default async function index(req, res) {
 
 const validation = async (data) => {
   const schema = Joi.object({
-    name: Joi.string(),
+    name: Joi.string().required(),
+    last_name: Joi.string(),
     email: Joi.string().required().email(),
     password: Joi.string().required().min(6).max(20),
+    phone: Joi.string().required().min(10),
     role: Joi.string(),
     verified: Joi.boolean(),
   });

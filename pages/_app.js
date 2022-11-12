@@ -14,6 +14,7 @@ import Router from "next/router";
 // progress bar
 import NProgress from "nprogress"; //nprogress module
 import "nprogress/nprogress.css"; //styles of nprogress
+import AuthProvider from "../auth/authProvider";
 
 //Binding events.
 Router.events.on("routeChangeStart", () => NProgress.start());
@@ -29,7 +30,11 @@ function MyApp(props) {
       import("bootstrap");
     });
   }, []);
-  return <Component {...pageProps} />;
+  return (
+    <AuthProvider>
+      <Component {...pageProps} />
+    </AuthProvider>
+  );
 }
 
 export default MyApp;

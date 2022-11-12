@@ -8,6 +8,15 @@
     text-transform: uppercase;
 }
 
+.linkFont_sub {
+    font-family: $f2 !important;
+    font-size: 1.2rem;
+    font-weight: 500 !important;
+    // color: #292929ad;
+    color: #fff;
+    text-transform: capitalize;
+}
+
 .logoP {
     position: relative;
     text-shadow: 2px 2px 5px rgba(100, 100, 0, 0.9);

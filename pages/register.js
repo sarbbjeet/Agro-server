@@ -6,7 +6,7 @@ import { f2 as ff, f3 } from "../styles/variables.module.scss";
 import { height } from "@mui/system";
 import CountryCode from "../components/CountryCode";
 import axios from "axios";
-import { useAuth } from "../auth/authProvider";
+import { useAuth } from "../context/authProvider";
 import { useRouter } from "next/router";
 import Link from "next/link";
 

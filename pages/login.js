@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import { colors } from "../utils/constants";
 import { f2 as ff, f3 } from "../styles/variables.module.scss";
-import { useAuth } from "../auth/authProvider";
+import { useAuth } from "../context/authProvider";
 import { useRouter } from "next/router";
 import Link from "next/link";
 

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import styles from "../styles/AppNav.module.scss";
-import { useAuth } from "../auth/authProvider";
+import { useAuth } from "../context/authProvider";
 import Image from "next/image";
 
 export default function ProfileDropdown() {

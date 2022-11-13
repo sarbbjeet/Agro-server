@@ -14,7 +14,7 @@ import Router from "next/router";
 // progress bar
 import NProgress from "nprogress"; //nprogress module
 import "nprogress/nprogress.css"; //styles of nprogress
-import AuthProvider from "../context/authProvider";
+import AuthProvider from "../context/AuthProvider";
 import MqttProvider from "../context/MqttProvider";
 
 //Binding events.

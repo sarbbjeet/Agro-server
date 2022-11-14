@@ -22,23 +22,22 @@ Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
-const brokerConfig = {
-  //url: "ws://88.208.242.97:8081",
-  // url: "ws://3.94.103.81:8081",
-  //url: "mqtt://test.mosquitto.org:8081",
-  url: "ws://localhost:8081",
-  options: {
-    username: "sarb",
-    password: "sahajsarb321",
-    protocolId: "MQIsdp",
-    protocolVersion: 3,
-    clean: true,
-    clientId: "mqttjs01",
-  },
-};
-
 function MyApp(props) {
   const { Component, pageProps } = props;
+  const brokerConfig = {
+    //url: "ws://88.208.242.97:8081",
+    // url: "ws://3.94.103.81:8081",
+    //url: "mqtt://test.mosquitto.org:8081",
+    url: process?.env.NEXT_PUBLIC_MQTT_URL || "ws://localhost:8081",
+    options: {
+      username: process?.env.NEXT_PUBLIC_MQTT_USERNAME,
+      password: process?.env.NEXT_PUBLIC_MQTT_PASSWORD,
+      protocolId: "MQIsdp",
+      protocolVersion: 3,
+      clean: true,
+      clientId: process?.env.NEXT_PUBLIC_MQTT_CLIENTID,
+    },
+  };
   React.useEffect(() => {
     import("jquery").then(($) => {
       window.$ = window.jQuery = $;

@@ -29,7 +29,7 @@ export default function AppNav() {
       >
         <ContactHeader />
         <div className="container">
-          <nav className="position-relative py-1 d-flex justify-content-between no-gutters align-items-center">
+          <nav className="position-relative h-20 d-flex justify-content-between no-gutters align-items-center">
             <h2 className="sr-only">Main Nav</h2>
             <Link href="/">
               <a className="navbar-brand">
@@ -209,7 +209,7 @@ export default function AppNav() {
               Submit Vehicles
             </a>
           </div> */}
-            <div
+            {/* <div
               id="searchIcon"
               style={{ cursor: "pointer" }}
               className="d-lg-none text-center"
@@ -223,14 +223,14 @@ export default function AppNav() {
                 <br />
                 Filter
               </span>
-            </div>
+            </div> */}
 
-            <div className="d-lg-none">
-              <div className="nav-icon menu_action">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
+            <div className="d-lg-none ">
+              <div className="nav-icon menu_action ">
+                <span style={{ backgroundColor: "#ccc" }}></span>
+                <span style={{ backgroundColor: "#ccc" }}></span>
+                <span style={{ backgroundColor: "#ccc" }}></span>
+                <span style={{ backgroundColor: "#ccc" }}></span>
               </div>
             </div>
           </nav>

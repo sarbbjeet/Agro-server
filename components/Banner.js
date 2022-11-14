@@ -5,8 +5,8 @@ import { f2 as ff, f3 } from "../styles/variables.module.scss";
 
 export default function Banner() {
   return (
-    <div className="container wrapper flex items-center text-custom-light h-full">
-      <div className="flex-1 flex  h-3/5 flex-col">
+    <div className="container wrapper flex items-center justify-center text-custom-light h-full">
+      <div className="flex  h-4/6 flex-col " style={{ width: "650px" }}>
         <div
           className="tagLine text-4xl"
           style={{ fontFamily: ff, fontWeight: 700 }}
@@ -33,7 +33,7 @@ export default function Banner() {
           </div>
         </div>
       </div>
-      <div className="flex-1 flex h-3/5 relative shadow rounded transition-all ">
+      <div className=" flex-1 hidden lg:flex h-4/6 relative shadow rounded transition-all ">
         <Image
           priority
           src={require("../public/images/f2.jpg")}

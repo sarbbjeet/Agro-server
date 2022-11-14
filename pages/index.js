@@ -9,7 +9,10 @@ export default function Home() {
   return (
     <Layout>
       <main className="main-container bg-custom-p1-dark">
-        <div className="flex items-center" style={{ height: "90vh" }}>
+        <div
+          className="flex items-center "
+          style={{ minHeight: "90vh", height: "500px" }}
+        >
           <Banner />
         </div>
       </main>

@@ -90,13 +90,13 @@ export default function Register() {
           style={{ minHeight: "90vh", height: "700px" }}
           className="flex container main-container items-center justify-center"
         >
-          <div className="w-3/6 relative justify-center flex overflow-hidden h-3/5">
+          <div className="w-3/6 relative justify-center md:flex overflow-hidden h-3/5 hidden">
             <Image
               src={require("../public/images/login1.jpg")}
               objectFit="cover"
             />
           </div>
-          <div className="w-3/6 lg:w-2/6 flex justify-end h-3/5">
+          <div className="md:w-3/6 lg:w-2/6 flex justify-end h-3/5 w-96">
             <div
               className="h-full ml-2 lg:ml-0 lg:w-6/6 w-full p-4 flex flex-col justify-center border-custom-p4"
               style={{ borderWidth: 2, borderColor: "rgba(50,50,50,0.6)" }}

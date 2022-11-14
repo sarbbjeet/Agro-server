@@ -63,13 +63,13 @@ export default function LoginForm() {
           style={{ minHeight: "90vh", height: "700px" }}
           className="flex container main-container items-center justify-center"
         >
-          <div className="relative flex justify-center overflow-hidden w-3/6 h-3/5">
+          <div className="relative md:flex justify-center overflow-hidden w-3/6 h-3/5 hidden">
             <Image
               src={require("../public/images/iot.jpg")}
               objectFit="cover"
             />
           </div>
-          <div className="h-3/5 flex justify-end lg:w-2/6 w-3/6">
+          <div className="h-3/5 flex justify-end lg:w-2/6 md:3/6 w-96">
             <div
               className="border-2 h-full lg:w-6/6 lg:m-0 ml-2 w-full  p-4 flex flex-col justify-center"
               style={{ borderWidth: 2, borderColor: "rgba(50,50,50,0.6)" }}

@@ -56,7 +56,7 @@ export default function ProfileDropdown() {
           className="list-unstyled position-absolute slow_3s shadow-8dp"
         >
           <li className="list-inline-item">
-            <Link href="/about/page">
+            <Link href="/user/dashboard">
               <a
                 className={`${styles.linkFont_sub} btn btn-dark w-100 text-left py-3`}
                 title=""

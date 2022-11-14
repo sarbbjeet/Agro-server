@@ -67,6 +67,7 @@ export default function LoginForm() {
             <Image
               src={require("../public/images/iot.jpg")}
               objectFit="cover"
+              priority
             />
           </div>
           <div className="h-3/5 flex justify-end lg:w-2/6 md:3/6 w-96">

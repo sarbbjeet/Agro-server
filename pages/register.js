@@ -94,6 +94,7 @@ export default function Register() {
             <Image
               src={require("../public/images/login1.jpg")}
               objectFit="cover"
+              priority
             />
           </div>
           <div className="md:w-3/6 lg:w-2/6 flex justify-end h-3/5 w-96">

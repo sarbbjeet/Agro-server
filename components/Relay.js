@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import { f2 as ff } from "../styles/variables.module.scss";
 import { colors } from "../utils/constants";
+import styles from "../styles/Relay.module.scss";
 
 export default function Relay({ title = "Sprinkler", power = 1, onClick }) {
   return (
@@ -11,7 +12,7 @@ export default function Relay({ title = "Sprinkler", power = 1, onClick }) {
       style={{ borderWidth: 1 / 2 }}
     >
       <div
-        className="text-xl"
+        className={`text-xl focus:outline-none focus:shadow-none ${styles.noSelect}`}
         style={{
           color: power ? "#ffbb00" : colors.p1,
           fontFamily: ff,
@@ -22,7 +23,7 @@ export default function Relay({ title = "Sprinkler", power = 1, onClick }) {
         {title}
       </div>
       <div
-        className="relative overflow-hidden"
+        className={`relative overflow-hidden ${styles.noSelect}`}
         style={{ width: 80, height: 70 }}
       >
         <Image
@@ -35,6 +36,7 @@ export default function Relay({ title = "Sprinkler", power = 1, onClick }) {
         />
       </div>
       <div
+        className={styles.noSelect}
         style={{
           fontFamily: ff,
           fontSize: "18px",

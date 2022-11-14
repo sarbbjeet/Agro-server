@@ -16,7 +16,7 @@ export default function Field({
 }) {
   return (
     <div
-      style={{ height: "480px" }}
+      style={{ height: "510px" }}
       className={`border-custom-p4 rounded-t-2xl shadow bg-custom-p2
       }`}
     >
@@ -26,7 +26,7 @@ export default function Field({
           alt="Picture of the field"
           objectFit="cover"
           width={400}
-          height={120}
+          height={150}
           src={require("../public/images/field_images/potato.jpeg")}
         />
       </div>

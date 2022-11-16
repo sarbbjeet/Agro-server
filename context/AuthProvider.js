@@ -20,7 +20,7 @@ export default function AuthProvider({ children }) {
             Authorization: `Bearer ${token}`,
           },
         });
-        if (user) setUser(user);
+        if (user?.data) setUser(user?.data);
       }
       setLoading(false);
     }

@@ -26,7 +26,7 @@ function MyApp(props) {
   const { Component, pageProps } = props;
   const brokerConfig = {
     //url: "ws://88.208.242.97:8081",
-    // url: "ws://3.94.103.81:8081",
+    // url: "mqtt://localhost:1883",
     //url: "mqtt://test.mosquitto.org:8081",
     url: process?.env.NEXT_PUBLIC_MQTT_URL || "ws://localhost:8081",
     options: {

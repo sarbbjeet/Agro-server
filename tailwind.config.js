@@ -18,6 +18,7 @@ module.exports = {
         p5,
         p6,
         transparent: "transparent",
+        transparent_back: "rgba(30,30,30,0.9)",
         current: "currentColor",
         white: "#ffffff",
         light: "#eee",

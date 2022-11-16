@@ -2,11 +2,12 @@ import Image from "next/image";
 import React from "react";
 import colors from "tailwindcss/colors";
 import { f2 as ff } from "../styles/variables.module.scss";
+import { fieldTypes } from "../utils/fieldImages";
 import Relay from "./Relay";
 import RoundIndicator from "./RoundIndicator";
 
 export default function Field({
-  title = "Potato field",
+  id = 0,
   addr = "7 tennyson street",
   data = {
     sensor1: 13.8,
@@ -17,7 +18,7 @@ export default function Field({
   return (
     <div
       style={{ height: "510px" }}
-      className={`border-custom-p4 rounded-t-2xl shadow bg-custom-p2
+      className={`border-custom-p4 rounded-t-2xl shadow bg-custom-p2 m-2
       }`}
     >
       <div className="">
@@ -27,21 +28,21 @@ export default function Field({
           objectFit="cover"
           width={400}
           height={150}
-          src={require("../public/images/field_images/potato.jpeg")}
+          src={fieldTypes.find((field) => field.id == id).image}
         />
       </div>
       <div className="px-2">
         <div
-          className="text-xl text-custom-p4 font-bold"
+          className="text-xl text-custom-p4 font-bold capitalize"
           style={{ fontFamily: ff, lineHeight: 1 }}
         >
-          {title}
+          {fieldTypes.find((field) => field.id == id).name}
         </div>
         <div
           style={{ fontFamily: ff, lineHeight: 1 }}
           className="text-base text-custom-p4 font-normal"
         >
-          {addr}
+          {addr.length > 35 ? `${addr.slice(0, 35)} ...` : addr}
         </div>
         <div className="flex mt-2">
           <RoundIndicator value={data?.sensor1} />
@@ -55,7 +56,7 @@ export default function Field({
           />
         </div>
         <div className="mt-2">
-          <Relay />
+          <Relay power={data?.relay1} />
         </div>
       </div>
     </div>

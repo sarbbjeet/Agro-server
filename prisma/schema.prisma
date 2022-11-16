@@ -24,6 +24,20 @@ verified Boolean @default(false)
 created_at DateTime @default(now())
 }
 
+model Field {
+  id String @id @default(uuid())
+  field_type_id Int 
+  addr String?
+  gateway Int
+  node Int
+  min_moist Int?
+  max_moist Int?
+  min_temp Float?
+  max_temp Float?
+  temp_auto Boolean @default(false)
+  moist_auto Boolean @default(false)
+}
+
 enum Role {
   USER
   ADMIN

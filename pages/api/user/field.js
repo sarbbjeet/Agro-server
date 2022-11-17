@@ -3,8 +3,10 @@ import { prisma } from "../../../database/prisma";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import NextCors from "nextjs-cors";
+import auth from "../../../middleware/auth";
+import { Prisma } from "@prisma/client";
 
-export default async function index(req, res) {
+const index = async (req, res) => {
   //cors
   if (req.method === "OPTIONS") res.status(200).send("ok");
   // nextjs-cors uses the cors package, so we invite you to check the documentation https://github.com/expressjs/cors
@@ -37,8 +39,53 @@ export default async function index(req, res) {
     } catch (err) {
       res.status(404).json({ error: err?.message || "unknown prisma error" });
     }
+  } else if (req.method === "PUT") {
+    try {
+      const {
+        query: { id: fieldId },
+      } = req;
+      const field = await prisma.Field.findUnique({
+        where: { id: fieldId },
+      });
+      if (!field) throw new Error("id is incorrect");
+      //validate input parameters
+      await validation(req.body);
+      //convert to int
+      const convertedReq = convertToInt(req.body);
+      if (
+        convertedReq?.moist_auto &&
+        !(convertedReq.min_moist < convertedReq.max_moist)
+      )
+        throw new Error("min value should be less than max value");
+
+      //update data
+      await prisma.Initial.update({
+        where: { id: fieldId },
+        data: convertedReq,
+      });
+
+      res.json({ data: req?.body });
+    } catch (err) {
+      if (err instanceof Prisma.PrismaClientKnownRequestError)
+        return res.status(404).json({ error: err.meta.cause });
+      res.status(404).json({ error: err.message });
+    }
+  } else if (req.method === "DELETE") {
+    try {
+      const {
+        query: { id: fieldId },
+      } = req;
+      const _fieldOld = await prisma.Initial.delete({
+        where: { id: fieldId },
+      });
+      if (!_fieldOld) throw new Error("field id not found");
+    } catch (err) {
+      if (err instanceof Prisma.PrismaClientKnownRequestError)
+        return res.status(404).json({ error: err.meta.cause });
+      res.status(404).json({ error: err.message });
+    }
   }
-}
+};
 
 const convertToInt = (data) => {
   let _data = { ...data };
@@ -64,3 +111,5 @@ const validation = async (data) => {
   });
   return await schema.validateAsync(data);
 };
+
+export default auth(index);

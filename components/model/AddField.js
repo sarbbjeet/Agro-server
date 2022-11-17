@@ -5,7 +5,11 @@ import { f2 as ff } from "../../styles/variables.module.scss";
 import ListItem from "../ListItem";
 import ToggleSwitch from "../ToggleSwitch";
 import { fieldTypes } from "../../utils/fieldImages";
+import axios from "axios";
+import { useAuth } from "../../context/AuthProvider";
+const url = "/api/user/field";
 export default function AddField({ closeModel, selectedItem, onSubmit }) {
+  const { token } = useAuth();
   const [field, setField] = useState({
     field_type_id: 0,
     addr: "",
@@ -18,12 +22,37 @@ export default function AddField({ closeModel, selectedItem, onSubmit }) {
     moist_auto: false,
     temp_auto: false,
   });
+  const [notification, setNotification] = useState({
+    error: false,
+    msg: "",
+  });
 
   const onChange = ({ target: { name, value, checked } }) => {
     setField((currentValue) => ({
       ...currentValue,
       [name]: name == "moist_auto" ? checked : value,
     }));
+  };
+
+  //add field to database
+  const addFieldToDB = async (newField) => {
+    //post
+    try {
+      const res = await axios(url, {
+        method: "POST",
+        data: newField,
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setNotification({ error: false, msg: "successfully added new field" });
+      onSubmit(); //call now ...
+    } catch (err) {
+      if (err?.response?.data?.error)
+        return setNotification({
+          error: true,
+          msg: err?.response?.data?.error,
+        });
+      setNotification({ error: true, msg: err.message });
+    }
   };
   return (
     <div className="z-[101] min-h-screen fixed w-full flex justify-center items-center bg-custom-transparent_back">
@@ -50,6 +79,17 @@ export default function AddField({ closeModel, selectedItem, onSubmit }) {
             className="py-2 flex flex-col items-center overflow-scroll h-full"
             // style={{ height: "400px" }}
           >
+            {/* feedback */}
+            {notification?.msg && (
+              <div
+                className={`p-2 w-5/6 ${
+                  notification?.error ? "alert-danger" : "alert-info"
+                }`}
+              >
+                <label className="m-0">{notification?.msg}</label>
+              </div>
+            )}
+
             <div
               className="flex flex-col w-5/6 mb-2"
               style={{ fontFamily: ff }}
@@ -170,7 +210,7 @@ export default function AddField({ closeModel, selectedItem, onSubmit }) {
             </div>
             <div className="flex w-5/6 mt-2">
               <div
-                onClick={() => onSubmit(field)}
+                onClick={() => addFieldToDB(field)}
                 className="text-custom-white bg-custom-primary p-2 px-4 rounded-md  cursor-pointer hover:bg-custom-purple"
               >
                 <label className="m-0 font-semibold" style={{ fontFamily: ff }}>

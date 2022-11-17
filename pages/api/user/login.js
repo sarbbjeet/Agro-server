@@ -28,6 +28,7 @@ export default async function login(req, res) {
 
   if (req.method === "GET") {
     try {
+      console.log("get requeste herer....");
       const token = extractToken(req);
       if (!token) throw new Error("token not found");
       // process.env.PRIVATE_KEY || "abcjkjklsd"

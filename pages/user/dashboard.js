@@ -18,23 +18,6 @@ export default function Dashboard() {
   const { login, user, isAuthenticated, loading, token } = useAuth();
   const Router = useRouter();
 
-  //add field to database
-  const addFieldToDB = async (newField) => {
-    //post
-    try {
-      const res = await axios(url, {
-        method: "POST",
-        data: newField,
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      console.log("resposne->", res?.data);
-    } catch (err) {
-      if (err?.response?.data?.error)
-        return console.log("errorkhkhk-->", err?.response?.data?.error);
-      console.log("errro x-->", err.message);
-    }
-  };
-
   useEffect(() => {
     if (!isAuthenticated && !loading) Router.push("/login");
   }, [isAuthenticated]);
@@ -64,7 +47,7 @@ export default function Dashboard() {
         <AddField
           closeModel={setFieldModel}
           selectedItem={selectedItem}
-          onSubmit={addFieldToDB}
+          onSubmit={() => setFieldModel(false)}
         />
       )}
       <Layout>

@@ -1,23 +1,39 @@
+import axios from "axios";
 import { Router, useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Field from "../../components/Field";
 import Layout from "../../components/Layout";
+import AddField from "../../components/model/AddField";
 import ScanForField from "../../components/model/ScanForField";
 import { useAuth } from "../../context/AuthProvider";
 import { useMqtt } from "../../context/MqttProvider";
 import { f2 as ff, f3 } from "../../styles/variables.module.scss";
 
+const url = "/api/user/field";
 export default function Dashboard() {
   const { client, messages } = useMqtt();
   const [openScanModel, setScanModel] = useState(false);
-  const { login, user, isAuthenticated, loading } = useAuth();
+  const [openFieldModel, setFieldModel] = useState(false);
+  const [selectedItem, setSelectedItem] = useState({});
+  const { login, user, isAuthenticated, loading, token } = useAuth();
   const Router = useRouter();
-  // console.log("user id= ", user?.data?.id);
-  // client?.subscribe(`/outTopic/${user?.data?.id}`);
-  useEffect(() => {
-    // console.log("user id", user?.data?.id);
-    // console.log("output--> ", messages);
-  }, [messages]);
+
+  //add field to database
+  const addFieldToDB = async (newField) => {
+    //post
+    try {
+      const res = await axios(url, {
+        method: "POST",
+        data: newField,
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log("resposne->", res?.data);
+    } catch (err) {
+      if (err?.response?.data?.error)
+        return console.log("errorkhkhk-->", err?.response?.data?.error);
+      console.log("errro x-->", err.message);
+    }
+  };
 
   useEffect(() => {
     if (!isAuthenticated && !loading) Router.push("/login");
@@ -33,7 +49,24 @@ export default function Dashboard() {
         // overflowY: openScanModel  "hidden"
       }}
     >
-      {openScanModel && <ScanForField closeModel={setScanModel} />}
+      {openScanModel && (
+        <ScanForField
+          closeModel={setScanModel}
+          selectedItem={(item) => {
+            setSelectedItem(item);
+            setFieldModel(true);
+            setScanModel(false);
+          }}
+        />
+      )}
+
+      {openFieldModel && (
+        <AddField
+          closeModel={setFieldModel}
+          selectedItem={selectedItem}
+          onSubmit={addFieldToDB}
+        />
+      )}
       <Layout>
         <main
           className="bg-custom-p1 text-custom-white flex"

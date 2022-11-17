@@ -3,7 +3,7 @@ import React from "react";
 import { useMqtt } from "../../context/MqttProvider";
 import { f2 as ff } from "../../styles/variables.module.scss";
 import ListItem from "../ListItem";
-export default function ScanForField({ closeModel }) {
+export default function ScanForField({ closeModel, selectedItem }) {
   const { finalData } = useMqtt();
   return (
     <div className="z-[101] min-h-screen fixed w-full flex justify-center items-center bg-custom-transparent_back">
@@ -41,7 +41,12 @@ export default function ScanForField({ closeModel }) {
             ) : (
               <>
                 {finalData.map((item, i) => (
-                  <ListItem key={i} gateway={item?.gateway} node={item?.node} />
+                  <ListItem
+                    key={i}
+                    gateway={item?.gateway}
+                    node={item?.node}
+                    onClick={() => selectedItem(item)}
+                  />
                 ))}
               </>
             )}

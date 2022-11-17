@@ -7,6 +7,7 @@ const AuthContext = createContext({});
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [_token, setToken] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -21,6 +22,7 @@ export default function AuthProvider({ children }) {
           },
         });
         if (user?.data) setUser(user?.data);
+        setToken(token);
       }
       setLoading(false);
     }
@@ -60,7 +62,14 @@ export default function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated: !!user, user, login, loading, logout }}
+      value={{
+        isAuthenticated: !!user,
+        user,
+        login,
+        loading,
+        logout,
+        token: _token,
+      }}
     >
       {children}
     </AuthContext.Provider>

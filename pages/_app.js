@@ -16,6 +16,7 @@ import NProgress from "nprogress"; //nprogress module
 import "nprogress/nprogress.css"; //styles of nprogress
 import AuthProvider from "../context/AuthProvider";
 import MqttProvider from "../context/MqttProvider";
+import AppModelProvider from "../context/AppModelProvider";
 
 //Binding events.
 Router.events.on("routeChangeStart", () => NProgress.start());
@@ -49,7 +50,9 @@ function MyApp(props) {
   return (
     <AuthProvider>
       <MqttProvider brokerConfig={brokerConfig}>
-        <Component {...pageProps} />
+        <AppModelProvider>
+          <Component {...pageProps} />
+        </AppModelProvider>
       </MqttProvider>
     </AuthProvider>
   );

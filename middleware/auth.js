@@ -24,7 +24,6 @@ const auth = (handler) => async (req, res) => {
       optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
     const token = extractToken(req);
-    console.log(url);
     if (!token) throw new Error("authorization token not found");
     if (token) {
       const { data: user } = await axios(url, {

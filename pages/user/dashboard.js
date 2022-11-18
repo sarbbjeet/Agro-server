@@ -1,44 +1,17 @@
-import axios from "axios";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Field from "../../components/Field";
 import Layout from "../../components/Layout";
-import EditField from "../../components/model/EditField";
-import DeleteModel from "../../components/model/DeleteModel";
-import ScanForField from "../../components/model/ScanForField";
 import { useAuth } from "../../context/AuthProvider";
-import { useMqtt } from "../../context/MqttProvider";
 import { f2 as ff, f3 } from "../../styles/variables.module.scss";
+import { useAppModel } from "../../context/AppModelProvider";
 
 const url = "/api/user/field";
 export default function Dashboard() {
-  const { client, messages } = useMqtt();
-  const [openScanModel, setScanModel] = useState(false);
-  const [deleteModel, setDeleteModel] = useState({
-    open: false,
-    id: "",
-  });
-  const _initialFieldModel = {
-    open: false,
-    selectedField: {},
-    isUpdate: false,
-  };
-  const [fieldModel, setFieldModel] = useState(_initialFieldModel);
-  const { login, user, isAuthenticated, loading, token } = useAuth();
+  const { loading, isAuthenticated, user } = useAuth();
+  const { editField, scanModel, deleteField } = useAppModel();
   const Router = useRouter();
 
-  const onDeleteField = async () => {
-    try {
-      const id = deleteModel?.id;
-      await axios(`${url}?id=${id}`, {
-        method: "DELETE",
-      });
-      setDeleteModel({ open: false, id: "" });
-      window.location.reload(); //reload current page
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
   useEffect(() => {
     if (!isAuthenticated && !loading) Router.push("/login");
   }, [isAuthenticated]);
@@ -46,45 +19,10 @@ export default function Dashboard() {
     <div
       className="static h-screen"
       // below css code is used to stop scrollign when model open
-      style={{
-        overflowY: openScanModel ? "hidden" : "visible",
-      }}
+      // style={{
+      //   overflowY: openScanModel ? "hidden" : "visible",
+      // }}
     >
-      {openScanModel && (
-        <ScanForField
-          closeModel={setScanModel}
-          selectedItem={(item) => {
-            setFieldModel((currentState) => ({
-              ...currentState,
-              selectedField: item,
-              open: true,
-            }));
-            setScanModel(false);
-          }}
-        />
-      )}
-
-      {fieldModel?.open && (
-        // edit or update
-        <EditField
-          closeModel={() => setFieldModel(_initialFieldModel)}
-          selectedItem={fieldModel?.selectedField}
-          update={fieldModel?.isUpdate}
-          onSubmit={() => {
-            setFieldModel(_initialFieldModel);
-            window.location.reload(); //reload current page
-          }}
-        />
-      )}
-
-      {deleteModel?.open && (
-        <DeleteModel
-          ok={onDeleteField}
-          closeModel={() =>
-            setDeleteModel((currentState) => ({ ...currentState, open: false }))
-          }
-        />
-      )}
       <Layout>
         <main
           className="bg-custom-p1 text-custom-white flex"
@@ -103,7 +41,7 @@ export default function Dashboard() {
                   Dashboard
                 </label>
                 <div
-                  onClick={() => setScanModel(true)}
+                  onClick={() => scanModel(true)}
                   className="ml-auto px-2 py-1 rounded-md hover:bg-custom-purple cursor-pointer bg-custom-primary inline-block"
                 >
                   Add Field
@@ -120,19 +58,19 @@ export default function Dashboard() {
                     id={f?.field_type_id}
                     addr={f?.addr}
                     data={{ relay1: 1 }}
-                    onDelete={() => {
-                      setDeleteModel({
+                    onDelete={() =>
+                      deleteField({
                         id: f.id,
                         open: true,
-                      });
-                    }}
-                    onEdit={() => {
-                      setFieldModel({
+                      })
+                    }
+                    onEdit={() =>
+                      editField({
                         isUpdate: true,
                         selectedField: f,
                         open: true,
-                      });
-                    }}
+                      })
+                    }
                   />
                 ))}
             </div>

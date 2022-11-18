@@ -28,7 +28,6 @@ export default async function login(req, res) {
 
   if (req.method === "GET") {
     try {
-      console.log("get requeste herer....");
       const token = extractToken(req);
       if (!token) throw new Error("token not found");
       // process.env.PRIVATE_KEY || "abcjkjklsd"
@@ -39,6 +38,9 @@ export default async function login(req, res) {
       //get user   //
       const user = await prisma.User.findUnique({
         where: { id: payload?.id },
+        include: {
+          fields: true,
+        },
       });
       delete user.password;
       res.json({ data: user });

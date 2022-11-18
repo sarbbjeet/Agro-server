@@ -14,6 +14,8 @@ export default function Field({
     sensor2: 45,
     relay1: 0,
   },
+  onDelete,
+  onEdit,
 }) {
   return (
     <div
@@ -21,7 +23,7 @@ export default function Field({
       className={`border-custom-p4 rounded-t-2xl shadow bg-custom-p2 m-2
       }`}
     >
-      <div className="">
+      <div className="relative">
         <Image
           className="rounded-t-xl"
           alt="Picture of the field"
@@ -30,6 +32,21 @@ export default function Field({
           height={150}
           src={fieldTypes.find((field) => field.id == id).image}
         />
+        <div className="absolute z-30 top-1 right-1 flex">
+          <span
+            onClick={onDelete}
+            className=" p-2 bg-custom-p1 rounded-l-sm hover:bg-custom-p3 transition-colors cursor-pointer"
+          >
+            <i className="fas fa-trash  hover:text-custom-p6 transition-colors cursor-pointer"></i>
+          </span>
+          <div className="w-[2px] bg-custom-p3"></div>
+          <span
+            onClick={onEdit}
+            className="p-2 bg-custom-p1 rounded-r-sm hover:bg-custom-p3 transition-colors cursor-pointer"
+          >
+            <i className="fas fa-edit hover:text-custom-p6 transition-colors cursor-pointer"></i>
+          </span>
+        </div>
       </div>
       <div className="px-2">
         <div

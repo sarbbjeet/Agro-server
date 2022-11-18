@@ -10,7 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
 id String @id @default(uuid())
 name String? 
@@ -22,6 +21,9 @@ role Role @default(USER)
 password String
 verified Boolean @default(false) 
 created_at DateTime @default(now())
+
+//relational model
+fields Field[]
 }
 
 model Field {
@@ -36,6 +38,9 @@ model Field {
   max_temp Float?
   temp_auto Boolean @default(false)
   moist_auto Boolean @default(false)
+  
+  farmer User @relation(fields: [farmerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  farmerId String 
 }
 
 enum Role {

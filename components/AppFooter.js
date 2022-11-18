@@ -41,12 +41,12 @@ export default function AppFooter() {
                 </Link>
               </li>
               <li className="list-inline-item w-100">
-                <Link href="/vehicles/search?vehicle_type=car">
+                <Link href="/">
                   <a
                     className="btn btn-block btn-dark text-left border-0 px-1"
                     title=""
                   >
-                    <i className="fas fa-angle-double-right"></i> login
+                    <i className="fas fa-angle-double-right"></i> Home
                   </a>
                 </Link>
               </li>

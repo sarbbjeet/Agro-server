@@ -16,55 +16,44 @@ const index = async (req, res) => {
     origin: "*",
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
-
   if (req.method === "GET") {
     try {
-      const fields = await prisma.Field.findMany();
-      res.json({ data: fields });
+      const {
+        query: { farmer_id },
+      } = req;
+      if (farmer_id) {
+        //fields under specific farmer id
+        const fields = await prisma.Field.findMany({
+          where: { farmerId: farmer_id },
+        });
+        return res.json({ data: fields });
+      }
+      const allFields = await prisma.Field.findMany();
+      res.json({ data: allFields });
     } catch (err) {
       res.status(404).json({ error: err.message });
     }
   } else if (req.method === "POST") {
     try {
-      //validation
-      await validation(req.body);
-      const convertedReq = convertToInt(req.body);
-      if (
-        convertedReq?.moist_auto &&
-        !(convertedReq.min_moist < convertedReq.max_moist)
-      )
-        throw new Error("min value should be less than max value");
+      const convertedReq = await deepValidation(req);
       await prisma.Field.create({ data: convertedReq });
       res.json({ data: req.body });
     } catch (err) {
+      console.log("error->", err.message);
       res.status(404).json({ error: err?.message || "unknown prisma error" });
     }
   } else if (req.method === "PUT") {
     try {
       const {
-        query: { id: fieldId },
+        query: { field_id },
       } = req;
-      const field = await prisma.Field.findUnique({
-        where: { id: fieldId },
-      });
-      if (!field) throw new Error("id is incorrect");
-      //validate input parameters
-      await validation(req.body);
-      //convert to int
-      const convertedReq = convertToInt(req.body);
-      if (
-        convertedReq?.moist_auto &&
-        !(convertedReq.min_moist < convertedReq.max_moist)
-      )
-        throw new Error("min value should be less than max value");
-
+      const convertedReq = await deepValidation(req);
       //update data
-      await prisma.Initial.update({
-        where: { id: fieldId },
+      const data = await prisma.Field.update({
+        where: { id: field_id },
         data: convertedReq,
       });
-
-      res.json({ data: req?.body });
+      res.json({ data });
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError)
         return res.status(404).json({ error: err.meta.cause });
@@ -73,12 +62,13 @@ const index = async (req, res) => {
   } else if (req.method === "DELETE") {
     try {
       const {
-        query: { id: fieldId },
+        query: { id },
       } = req;
-      const _fieldOld = await prisma.Initial.delete({
-        where: { id: fieldId },
+      const _fieldOld = await prisma.Field.delete({
+        where: { id },
       });
       if (!_fieldOld) throw new Error("field id not found");
+      return res.json({ data: "successfully delete field" });
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError)
         return res.status(404).json({ error: err.meta.cause });
@@ -94,6 +84,50 @@ const convertToInt = (data) => {
   _data["min_temp"] = parseInt(_data["min_temp"]);
   _data["max_temp"] = parseInt(_data["max_temp"]);
   return _data;
+};
+
+//deep validation
+const deepValidation = async (req) => {
+  const {
+    query: { farmer_id, field_id },
+  } = req;
+  if (!farmer_id) throw new Error("farmer id is missing");
+  if (req.method === "PUT" && !field_id) throw new Error("field id is missing");
+  const user = await prisma.User.findUnique({
+    where: { id: farmer_id },
+  });
+  if (!user) throw new Error("farmer id is incorrect");
+  //http PUT only (validate field_id)
+  if (req.method == "PUT") {
+    const fid = await prisma.Field.findUnique({
+      where: {
+        id: field_id,
+      },
+    });
+    if (!fid) throw new Error("field id is incorrect");
+  }
+  //arguments validation
+  await validation(req.body);
+  const convertedReq = convertToInt(req.body);
+  //To check if gateway and node id is already exists
+  const _fg = await prisma.Field.findMany({
+    where: {
+      gateway: convertedReq?.gateway,
+    },
+  });
+  if (_fg?.length > 0 && req.method == "POST") {
+    const _fn = _fg.filter((f) => f?.node == convertedReq?.node);
+    if (_fn.length >= 1)
+      throw new Error("Same gateway and node already exist in the db");
+  }
+  convertedReq["farmerId"] = farmer_id;
+  if (
+    convertedReq?.moist_auto &&
+    !(convertedReq.min_moist < convertedReq.max_moist)
+  )
+    throw new Error("min value should be less than max value");
+
+  return convertedReq;
 };
 
 const validation = async (data) => {

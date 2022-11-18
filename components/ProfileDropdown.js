@@ -25,7 +25,7 @@ export default function ProfileDropdown() {
 
   return (
     <>
-      <li className="float-left position-relative mx-16  has_sub">
+      <li className="float-left position-relative ml-16  has_sub">
         <a
           onMouseOver={() => setMouse(true)}
           onMouseOut={() => setMouse(false)}

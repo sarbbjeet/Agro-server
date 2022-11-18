@@ -8,19 +8,31 @@ import { fieldTypes } from "../../utils/fieldImages";
 import axios from "axios";
 import { useAuth } from "../../context/AuthProvider";
 const url = "/api/user/field";
-export default function AddField({ closeModel, selectedItem, onSubmit }) {
-  const { token } = useAuth();
+export default function EditField({
+  closeModel,
+  selectedItem,
+  onSubmit,
+  update = false,
+}) {
+  const { token, user } = useAuth();
   const [field, setField] = useState({
-    field_type_id: 0,
-    addr: "",
+    id: update ? selectedItem?.id : "",
+    field_type_id:
+      selectedItem?.field_type_id != undefined
+        ? selectedItem?.field_type_id
+        : 0,
+    addr: selectedItem?.addr || "",
     gateway: selectedItem?.gateway,
     node: selectedItem?.node,
-    min_moist: 0,
-    max_moist: 0,
-    min_temp: 0,
-    max_temp: 0,
-    moist_auto: false,
-    temp_auto: false,
+    min_moist:
+      selectedItem?.min_moist != undefined ? selectedItem?.min_moist : 0,
+    max_moist: selectedItem?.max_moist ? selectedItem?.max_moist : 0,
+    min_temp: selectedItem?.min_temp != undefined ? selectedItem?.min_temp : 0,
+    max_temp: selectedItem?.max_temp != undefined ? selectedItem?.max_temp : 0,
+    moist_auto:
+      selectedItem?.moist_auto != undefined ? selectedItem?.moist_auto : false,
+    temp_auto:
+      selectedItem?.temp_auto != undefined ? selectedItem?.temp_auto : false,
   });
   const [notification, setNotification] = useState({
     error: false,
@@ -34,22 +46,30 @@ export default function AddField({ closeModel, selectedItem, onSubmit }) {
     }));
   };
 
-  //add field to database
-  const addFieldToDB = async (newField) => {
+  //add or update field to database
+  const onFieldToDB = async () => {
     //post
+    const newField = { ...field };
+    delete newField?.id;
     try {
-      const res = await axios(url, {
-        method: "POST",
-        data: newField,
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios(
+        `${url}?farmer_id=${user?.id}${update ? `&field_id=${field?.id}` : ""}`,
+        {
+          method: update ? "PUT" : "POST",
+          data: newField,
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setNotification({ error: false, msg: "successfully added new field" });
       onSubmit(); //call now ...
     } catch (err) {
       if (err?.response?.data?.error)
         return setNotification({
           error: true,
-          msg: err?.response?.data?.error,
+          msg:
+            err?.response?.data?.error?.length > 110
+              ? `${err?.response?.data?.error?.slice(0, 110)}`
+              : err?.response?.data?.error,
         });
       setNotification({ error: true, msg: err.message });
     }
@@ -210,11 +230,14 @@ export default function AddField({ closeModel, selectedItem, onSubmit }) {
             </div>
             <div className="flex w-5/6 mt-2">
               <div
-                onClick={() => addFieldToDB(field)}
+                onClick={onFieldToDB}
                 className="text-custom-white bg-custom-primary p-2 px-4 rounded-md  cursor-pointer hover:bg-custom-purple"
               >
-                <label className="m-0 font-semibold" style={{ fontFamily: ff }}>
-                  Add
+                <label
+                  className="m-0 font-semibold cursor-pointer"
+                  style={{ fontFamily: ff }}
+                >
+                  {update ? "Update" : "Add"}
                 </label>
               </div>
             </div>

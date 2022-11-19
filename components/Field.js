@@ -3,16 +3,18 @@ import React from "react";
 import colors from "tailwindcss/colors";
 import { f2 as ff } from "../styles/variables.module.scss";
 import { fieldTypes } from "../utils/fieldImages";
+import LoadingSpinner from "./LoadingSpinner";
 import Relay from "./Relay";
 import RoundIndicator from "./RoundIndicator";
 
 export default function Field({
   id = 0,
+  loading,
   addr = "7 tennyson street",
   data = {
-    sensor1: 13.8,
-    sensor2: 45,
-    relay1: 0,
+    sensor0: 13.8,
+    sensor1: 45,
+    relay0: 0,
   },
   onDelete,
   onEdit,
@@ -20,9 +22,11 @@ export default function Field({
   return (
     <div
       style={{ height: "510px" }}
-      className={`border-custom-p4 rounded-t-2xl shadow bg-custom-p2 m-2
-      }`}
+      className={`border-custom-p4 rounded-t-2xl shadow bg-custom-p2 m-2 relative`}
     >
+      {loading && (
+        <LoadingSpinner className="absolute top-0 z-10 flex justify-center w-full h-full items-center bg-[rgba(0,0,0,0.6)]" />
+      )}
       <div className="relative">
         <Image
           className="rounded-t-xl"
@@ -62,18 +66,18 @@ export default function Field({
           {addr.length > 35 ? `${addr.slice(0, 35)} ...` : addr}
         </div>
         <div className="flex mt-2">
-          <RoundIndicator value={data?.sensor1} />
+          <RoundIndicator value={data?.sensor0} />
           <div className="w-2"></div>
           <RoundIndicator
             title="Soil Moisture"
             isFloatValue={false}
             valueSuffix="%"
             minValue={0}
-            value={data?.sensor2}
+            value={data?.sensor1}
           />
         </div>
         <div className="mt-2">
-          <Relay power={data?.relay1} />
+          <Relay power={data?.relay0} />
         </div>
       </div>
     </div>

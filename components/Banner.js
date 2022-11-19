@@ -2,8 +2,10 @@ import Image from "next/image";
 import React from "react";
 import { fontFamily } from "../utils/constants";
 import { f2 as ff, f3 } from "../styles/variables.module.scss";
+import { useRouter } from "next/router";
 
 export default function Banner() {
+  const router = useRouter();
   return (
     <div className="container wrapper flex items-center justify-center text-custom-light h-full">
       <div className="flex  h-4/6 flex-col " style={{ width: "650px" }}>
@@ -28,7 +30,10 @@ export default function Banner() {
           </li>
         </ul>
         <div className="request_events">
-          <div className="py-2 px-6 bg-custom-p6 inline-block cursor-pointer rounded-md shadow-2xl hover:bg-custom-p6-dark hover:text-custom-light active:scale-50 transition-all">
+          <div
+            onClick={() => router.push("/user/dashboard")}
+            className="py-2 px-6 bg-custom-p6 inline-block cursor-pointer rounded-md shadow-2xl hover:bg-custom-p6-dark hover:text-custom-light active:scale-50 transition-all"
+          >
             Try Now
           </div>
         </div>
@@ -36,7 +41,7 @@ export default function Banner() {
       <div className=" flex-1 hidden lg:flex h-4/6 relative shadow rounded transition-all ">
         <Image
           priority
-          src={require("../public/images/f2.jpg")}
+          src={require("../public/images/iot_img.jpeg")}
           objectFit="cover"
         />
       </div>

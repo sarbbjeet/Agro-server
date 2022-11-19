@@ -3,18 +3,23 @@ import Image from "next/image";
 import Banner from "../components/Banner";
 import Banner1 from "../components/Banner1";
 import Layout from "../components/Layout";
+import Benefits from "../components/Benefits";
+import Features from "../components/Features";
+import Importance from "../components/Importance";
+import SensorsFeatures from "../components/SensorsFeatures";
 import { colors } from "../utils/constants";
 
 export default function Home() {
   return (
     <Layout>
       <main className="main-container bg-custom-p1-dark">
-        <div
-          className="flex items-center "
-          style={{ minHeight: "90vh", height: "500px" }}
-        >
+        <div className="flex items-center h-[500px] lg:h-[90vh]">
           <Banner />
         </div>
+        <Benefits />
+        <Importance />
+        <Features />
+        <SensorsFeatures />
       </main>
       <style jsx>
         {`

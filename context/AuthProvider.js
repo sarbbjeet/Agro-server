@@ -44,7 +44,7 @@ export default function AuthProvider({ children }) {
           Authorization: `Bearer ${token?.data}`,
         },
       });
-      if (user) setUser(user);
+      if (user?.data) setUser(user?.data);
       return { error: false, msg: "successfully login" };
     } catch (err) {
       if (err?.response?.data)

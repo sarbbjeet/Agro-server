@@ -87,7 +87,7 @@ export default function AppNav() {
                   </a>
                   <ul className="list-unstyled position-absolute slow_3s shadow-8dp">
                     <li className="list-inline-item">
-                      <Link href="/about/page">
+                      <Link href="/guide/app">
                         <a
                           className={`${styles.linkFont} btn btn-dark w-100 text-left py-3`}
                           title=""
@@ -112,7 +112,7 @@ export default function AppNav() {
                       </Link>
                     </li>
                     <li className="list-inline-item">
-                      <Link href="/about/reviews">
+                      <Link href="/guide/gateway">
                         <a
                           className={`${styles.linkFont} btn btn-dark w-100 text-left py-3`}
                           title=""
@@ -137,7 +137,7 @@ export default function AppNav() {
                       </Link>
                     </li>
                     <li className="list-inline-item">
-                      <Link href="/about/reviews">
+                      <Link href="/guide/node">
                         <a
                           className={`${styles.linkFont} btn btn-dark w-100 text-left py-3`}
                           title=""

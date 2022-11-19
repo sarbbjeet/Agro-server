@@ -17,9 +17,9 @@ const Input = styled.input.attrs((props) => ({
   placeholder: "email address",
 }))``;
 
-export default function Layout({ children }) {
+export default function Layout({ children, ...props }) {
   return (
-    <div>
+    <div {...props}>
       <AppHead />
       <Header />
       {children}

@@ -6,7 +6,7 @@ import { f2 as ff } from "../styles/variables.module.scss";
 export default function FourOhFour() {
   return (
     <Layout>
-      <div className="body-container">
+      <div className="body-container bg-custom-p1">
         <h4> 404 - Page Not Found </h4>
       </div>
       <style jsx>
@@ -21,6 +21,7 @@ export default function FourOhFour() {
             direction: column;
             justify-content: center;
             align-items: center;
+
             min-height: 500px;
           }
         `}

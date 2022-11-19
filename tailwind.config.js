@@ -30,6 +30,7 @@ module.exports = {
         "bubble-gum": "#ff77e9",
         bermuda: "#78dcca",
         "p1-dark": "#1a1F26",
+        "p1-dark_new": "#212a33",
         "p1-dark-h": "#001723",
         "p6-dark": "#F1630E", //yellow
         primary: "#0E89FF",

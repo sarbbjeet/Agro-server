@@ -21,9 +21,9 @@ export default function AppFooter() {
             </p>
             <span>
               Agriculture Monitoring System <br />
-              Camps industrial <br />
-              estates Kirknewton <br />
-              EH27 8DF
+              59 Quentin Rise <br />
+              Livingstone <br />
+              EH54 6NT
             </span>
           </div>
           <div className="col-sm-6 col-lg-3 pb-2">

@@ -10,9 +10,12 @@ export default function AppHead() {
         content="upgrade-insecure-requests"
       />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link href="/images/favicon.png" rel="shortcut icon" />
-      <title>All Motors Ltd</title>
-      <meta name="description" content="browsing all type of motors vehicles" />
+      <link href="/images/agriculture.png" rel="shortcut icon" />
+      <title>Agriculture Monitoring System</title>
+      <meta
+        name="description"
+        content="Making agriculture easy with IOT technologies"
+      />
       {/* <Script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"

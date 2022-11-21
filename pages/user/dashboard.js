@@ -21,7 +21,7 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    console.log("final data", finalData);
+    // console.log("final data", finalData);
   }, [finalData]);
   useEffect(() => {
     if (!isAuthenticated && !loading) Router.push("/login");

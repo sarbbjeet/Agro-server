@@ -75,7 +75,7 @@ export default function EditField({
     }
   };
   return (
-    <div className="z-[101] min-h-screen fixed w-full flex justify-center items-center bg-custom-transparent_back">
+    <div className="z-[101] min-h-screen fixed w-full flex justify-center items-center bg-custom-transparent_back px-3">
       <div className="  bg-custom-light shadow-lg border border-1 border-custom-p4 min-h-min sm:min-w-[350px] min-w-full">
         <div className="relative bg-custom-primary h-14 shadow-lg flex justify-center items-center ">
           <label

@@ -9,7 +9,7 @@ export default function About() {
       <main className="bg-custom-p1 mt-4">
         <section>
           <header
-            className="text-center bg_parallax bg-white"
+            className="text-center bg_parallax bg-white sm:block hidden"
             style={{
               background: `url(/images/about-us-banner.jpg) center no-repeat`,
               // height: "300px",

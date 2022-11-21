@@ -8,7 +8,7 @@ export default function Contact() {
   const [closeWindow, setCloseWindow] = useState(false);
   return (
     <Layout className="bg-custom-p1">
-      <section>
+      <section className="sm:block hidden">
         <header
           className="text-center bg_parallax bg-white mt-8"
           style={{
@@ -45,11 +45,9 @@ export default function Contact() {
           </div>
         </header>
       </section>
-      <main className="container py-16">
+
+      <main className="container  sm:py-8 pt-28 pb-8">
         <section className="flex justify-around">
-          <div className="w-full lg:w-[45%] sm:w-[65%]  lg:bg-custom-white bg-custom-p1">
-            <SendUsMessage hiddenCloseBtn={true} />
-          </div>
           <div className="hidden lg:w-[45%] lg:flex">
             <div
               className="bg-dark border-[1px] border-custom-p4 px-3 px-md-4 py-3"
@@ -114,6 +112,9 @@ export default function Contact() {
                 </a>
               </div>
             </div>
+          </div>
+          <div className="w-full lg:w-[45%] sm:w-[65%]  lg:bg-custom-white bg-custom-p1">
+            <SendUsMessage hiddenCloseBtn={true} />
           </div>
         </section>
 

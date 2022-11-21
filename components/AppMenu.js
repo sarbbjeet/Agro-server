@@ -144,8 +144,11 @@ export default function AppMenu() {
             </Link>
           </li>
 
-          <li style={{ display: isAuthenticated ? "flex" : "none" }}>
-            <Link href="/user/profile">
+          <li
+            style={{ display: isAuthenticated ? "flex" : "none" }}
+            onClick={logout}
+          >
+            <Link href="/">
               <a
                 className="nav-click btn btn-outline-dark border-0 w-100 text-left py-3 font-weight-bold"
                 title=""
@@ -155,7 +158,7 @@ export default function AppMenu() {
                   className="d-flex align-items-center p-0 m-0"
                 >
                   <Image
-                    src="/images/icons/maintenance.png"
+                    src="/images/logout_1.png"
                     width="35px"
                     height="35px"
                     color="white"
@@ -168,7 +171,7 @@ export default function AppMenu() {
                       color: "#ccc",
                     }}
                   >
-                    Edit Profile
+                    Logout
                   </span>
                 </div>
               </a>
@@ -186,7 +189,7 @@ export default function AppMenu() {
                   className="d-flex align-items-center p-0 m-0"
                 >
                   <Image
-                    src="/images/profile.png"
+                    src="/images/login_key.png"
                     width="35px"
                     height="35px"
                     color="white"

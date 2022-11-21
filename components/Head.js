@@ -10,7 +10,7 @@ export default function AppHead() {
         content="upgrade-insecure-requests"
       />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link href="/images/agriculture.png" rel="shortcut icon" />
+      <link href="/images/monitoring.png" rel="shortcut icon" />
       <title>Agriculture Monitoring System</title>
       <meta
         name="description"

@@ -16,6 +16,10 @@ export default class MyDocument extends Document {
             httpEquiv="Content-Security-Policy"
             content="upgrade-insecure-requests"
           />
+          <meta
+            property="og:image"
+            content="https://mycodehub.co.uk/images/monitoring.png"
+          />
 
           <link rel="shortcut icon" href="/static/favicon.ico" />
 

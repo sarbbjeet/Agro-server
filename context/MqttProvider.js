@@ -24,7 +24,7 @@ export default function MqttProvider({ brokerConfig, children }) {
         //subcribe topic
         newClient?.subscribe(`/outTopic/${user?.id}`);
         console.log("user id=", `/outTopic/${user?.id}`);
-        console.log("new client connected", newClient);
+        console.log("new client connected");
         setClient(newClient);
       });
       newClient.on("disconnect", () => {

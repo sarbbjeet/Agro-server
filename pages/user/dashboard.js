@@ -12,9 +12,9 @@ export default function Dashboard() {
   const { loading, isAuthenticated, user } = useAuth();
   const { editField, scanModel, deleteField } = useAppModel();
   const Router = useRouter();
-  const { scannedList, publish_data } = useMqtt();
+  const { allReceived, publish_data } = useMqtt();
   const getSensorValues = ({ gateway, node }) => {
-    const matched = scannedList.find(
+    const matched = allReceived?.find(
       (d) => d.gateway == gateway && d.node === node
     );
     return matched?.data;

@@ -79,6 +79,7 @@ const index = async (req, res) => {
 
 const convertToInt = (data) => {
   let _data = { ...data };
+  _data["field_type_id"] = parseInt(_data["field_type_id"]);
   _data["min_moist"] = parseInt(_data["min_moist"]);
   _data["max_moist"] = parseInt(_data["max_moist"]);
   _data["min_temp"] = parseInt(_data["min_temp"]);

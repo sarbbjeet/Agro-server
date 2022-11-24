@@ -13,8 +13,8 @@ export default function Field({
   loading,
   addr = "7 tennyson street",
   data = {
-    sensor0: 13.8,
-    sensor1: 45,
+    sensor0: 0,
+    sensor1: 0,
     relay0: 0,
   },
   moist_auto = false,

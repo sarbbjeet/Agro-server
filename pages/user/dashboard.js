@@ -12,17 +12,14 @@ export default function Dashboard() {
   const { loading, isAuthenticated, user } = useAuth();
   const { editField, scanModel, deleteField } = useAppModel();
   const Router = useRouter();
-  const { finalData, publish_data } = useMqtt();
+  const { scannedList, publish_data } = useMqtt();
   const getSensorValues = ({ gateway, node }) => {
-    const matched = finalData.find(
+    const matched = scannedList.find(
       (d) => d.gateway == gateway && d.node === node
     );
     return matched?.data;
   };
 
-  useEffect(() => {
-    // console.log("final data", finalData);
-  }, [finalData]);
   useEffect(() => {
     if (!isAuthenticated && !loading) Router.push("/login");
   }, [isAuthenticated]);

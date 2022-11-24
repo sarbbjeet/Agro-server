@@ -13,7 +13,6 @@ export default function Relay({
   return (
     <div className="flex items-center">
       <div
-        aria-disabled={true}
         onClick={onClick}
         className={`${
           disabled && "pointer-events-none"
@@ -56,10 +55,11 @@ export default function Relay({
           {power ? "Power On" : "Power Off"}
         </div>
       </div>
-      <label style={{ fontFamily: ff }} className="ml-2">
-        {" "}
-        (un-clickable)
-      </label>
+      {disabled && (
+        <label style={{ fontFamily: ff }} className="ml-2">
+          (un-clickable)
+        </label>
+      )}
     </div>
   );
 }

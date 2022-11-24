@@ -9,7 +9,8 @@ export const MqttContext = React.createContext(null);
 export default function MqttProvider({ brokerConfig, children }) {
   const [client, setClient] = React.useState(null);
   const [messages, setMessages] = React.useState({});
-  const [finalData, setFinalData] = React.useState([]);
+  const [allReceived, setAllReceived] = React.useState([]);
+  const [scannedList, setScannedList] = React.useState([]);
   const [reconnect, setReconnect] = React.useState("");
   const { login, user, isAuthenticated, loading } = useAuth();
   const ref_client = useRef();
@@ -79,36 +80,47 @@ export default function MqttProvider({ brokerConfig, children }) {
   useEffect(() => {
     const timer = setInterval(() => {
       //remove item from array if time difference is greater than 30s
-      if (finalData.length > 0) {
-        const itemsLeft = finalData.filter(
+      if (allReceived.length > 0) {
+        const itemsLeft = allReceived.filter(
           (item) => Date.now() - item?.time < 30000
         );
-        setFinalData(itemsLeft);
+        setAllReceived(itemsLeft);
       }
     }, 4000);
     return () => {
       clearInterval(timer);
     };
-  }, [finalData]);
+  }, [allReceived]);
 
   //filter and insert received item to final data array
   useEffect(() => {
     const filter = async () => {
       if (messages?.gateway != undefined && messages?.node) {
-        if (finalData.length > 0) {
-          const filterItems = finalData.filter(
+        if (allReceived.length > 0) {
+          const filterItems = allReceived.filter(
             (item) =>
               !(
                 item?.gateway == messages?.gateway &&
                 item?.node == messages?.node
               )
           );
-          setFinalData([...filterItems, messages]);
-        } else setFinalData((currentData) => [...currentData, messages]);
+          setAllReceived([...filterItems, messages]);
+        } else setAllReceived((currentData) => [...currentData, messages]);
       }
     };
     filter();
   }, [messages]);
+
+  useEffect(() => {
+    setScannedList(
+      allReceived?.filter(
+        (f) =>
+          !user?.fields.find(
+            (e) => e?.gateway == f?.gateway && e?.node == f?.node
+          )
+      )
+    );
+  }, [allReceived]);
 
   const publish_data = (msg) => {
     try {
@@ -124,7 +136,9 @@ export default function MqttProvider({ brokerConfig, children }) {
   };
 
   return (
-    <MqttContext.Provider value={{ client, finalData, publish_data }}>
+    <MqttContext.Provider
+      value={{ client, allReceived, publish_data, scannedList }}
+    >
       {children}
     </MqttContext.Provider>
   );

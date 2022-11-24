@@ -4,6 +4,9 @@ import Router, { useRouter } from "next/router";
 import axios from "axios";
 const AuthContext = createContext({});
 
+const url = `/api/user/login`;
+const createUserUrl = `/api/user`;
+
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -11,43 +14,56 @@ export default function AuthProvider({ children }) {
   const router = useRouter();
 
   useEffect(() => {
-    async function loadUserFromCookies() {
-      const token = Cookies.get("authToken");
-      if (token) {
-        console.log("Got a token in the cookies, let's see if it is valid");
-        // api.defaults.headers.Authorization = `Bearer ${token}`;
-        const { data: user } = await axios("/api/user/login", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        if (user?.data) setUser(user?.data);
-        setToken(token);
-      }
-      setLoading(false);
-    }
     loadUserFromCookies();
   }, []);
 
+  async function loadUserFromCookies() {
+    const token = Cookies.get("authToken");
+    if (token && token != "") {
+      console.log("Got a token in the cookies, let's see if it is valid");
+      // api.defaults.headers.Authorization = `Bearer ${token}`;
+      const { data: user } = await axios(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (user?.data) setUser(user?.data);
+      setToken(token);
+    }
+    setLoading(false);
+  }
+
   const login = async (email, password) => {
     try {
-      const { data: token } = await axios.post("/api/user/login", {
+      const { data: token } = await axios.post(url, {
         email,
         password,
       });
-      if (!token) throw new Error("token is not received");
+      if (!token?.data) throw new Error("token is not received"); // -->check for mistake token?.data
 
       Cookies.set("authToken", token?.data, { expires: 60 });
       //api.defaults.headers.Authorization = `Bearer ${token?.data}`;
-      const { data: user } = await axios("/api/user/login", {
+      const { data: user } = await axios(url, {
         headers: {
           Authorization: `Bearer ${token?.data}`,
         },
       });
       if (user?.data) setUser(user?.data);
+      setToken(token?.data);
       return { error: false, msg: "successfully login" };
     } catch (err) {
       if (err?.response?.data)
+        return { error: true, msg: err?.response?.data?.error };
+      return { error: true, msg: err?.message };
+    }
+  };
+
+  const register = async (dataToSend) => {
+    try {
+      const { data } = await axios.post(createUserUrl, dataToSend);
+      return { error: false, msg: "register successfully" };
+    } catch (err) {
+      if (err?.response?.data?.error)
         return { error: true, msg: err?.response?.data?.error };
       return { error: true, msg: err?.message };
     }
@@ -67,7 +83,9 @@ export default function AuthProvider({ children }) {
         user,
         login,
         loading,
+        register,
         logout,
+        loadUserFromCookies,
         token: _token,
       }}
     >

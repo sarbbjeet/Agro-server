@@ -25,7 +25,7 @@ export default function Field({
       className={`border-custom-p4 rounded-t-2xl shadow bg-custom-p2 m-2 relative`}
     >
       {loading && (
-        <LoadingSpinner className="absolute top-0 z-10 flex justify-center w-full h-full items-center bg-[rgba(0,0,0,0.6)]" />
+        <LoadingSpinner className="absolute top-0 z-20 flex justify-center w-full h-full items-center bg-[rgba(0,0,0,0.6)]" />
       )}
       <div className="relative">
         <Image

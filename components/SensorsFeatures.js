@@ -14,7 +14,7 @@ export default function SensorsFeatures() {
           IoT Sensor Features
         </label>
       </div>
-      <div className="mt-4 flex flex-wrap justify-between">
+      <div className="mt-2 flex flex-wrap justify-between">
         <SensorFeaturesItem
           title="Periodic or Movement-Based"
           body="Set up LoRa agriculture devices to broadcast updates at predetermined

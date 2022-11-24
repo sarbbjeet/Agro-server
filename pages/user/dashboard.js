@@ -12,7 +12,7 @@ export default function Dashboard() {
   const { loading, isAuthenticated, user } = useAuth();
   const { editField, scanModel, deleteField } = useAppModel();
   const Router = useRouter();
-  const { finalData } = useMqtt();
+  const { finalData, publish_data } = useMqtt();
   const getSensorValues = ({ gateway, node }) => {
     const matched = finalData.find(
       (d) => d.gateway == gateway && d.node === node
@@ -26,6 +26,36 @@ export default function Dashboard() {
   useEffect(() => {
     if (!isAuthenticated && !loading) Router.push("/login");
   }, [isAuthenticated]);
+
+  const fieldProps = (f) => ({
+    fId: f?.field_type_id,
+    addr: f?.addr,
+    moist_auto: f?.moist_auto,
+    loading: getSensorValues({ gateway: f.gateway, node: f.node })
+      ? false
+      : true,
+    data: getSensorValues({ gateway: f.gateway, node: f.node }),
+    onDelete: () =>
+      deleteField({
+        id: f.id,
+        open: true,
+      }),
+    onEdit: () =>
+      editField({
+        isUpdate: true,
+        selectedField: f,
+        open: true,
+      }),
+    sprinklerEvent: (state) =>
+      publish_data({
+        gateway: f?.gateway,
+        node: f?.node,
+        data: {
+          relay0: state,
+        },
+      }),
+  });
+
   return (
     <div
       className="static h-screen"
@@ -63,31 +93,7 @@ export default function Dashboard() {
             <div className="mt-2 flex flex-wrap">
               {user?.fields &&
                 user?.fields?.map((f, i) => (
-                  <Field
-                    key={i}
-                    id={f?.field_type_id}
-                    addr={f?.addr}
-                    loading={
-                      getSensorValues({ gateway: f.gateway, node: f.node })
-                        ? false
-                        : true
-                    }
-                    data={getSensorValues({ gateway: f.gateway, node: f.node })}
-                    // data={{ relay1: 0, sensor1: 50.78, sensor2: 19 }}
-                    onDelete={() =>
-                      deleteField({
-                        id: f.id,
-                        open: true,
-                      })
-                    }
-                    onEdit={() =>
-                      editField({
-                        isUpdate: true,
-                        selectedField: f,
-                        open: true,
-                      })
-                    }
-                  />
+                  <Field key={i} {...fieldProps(f)} />
                 ))}
             </div>
           </div>

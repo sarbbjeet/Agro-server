@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import colors from "tailwindcss/colors";
+import { useMqtt } from "../context/MqttProvider";
 import { f2 as ff } from "../styles/variables.module.scss";
 import { fieldTypes } from "../utils/fieldImages";
 import LoadingSpinner from "./LoadingSpinner";
@@ -8,7 +9,7 @@ import Relay from "./Relay";
 import RoundIndicator from "./RoundIndicator";
 
 export default function Field({
-  id = 0,
+  fId = 0,
   loading,
   addr = "7 tennyson street",
   data = {
@@ -16,8 +17,10 @@ export default function Field({
     sensor1: 45,
     relay0: 0,
   },
+  moist_auto = false,
   onDelete,
   onEdit,
+  sprinklerEvent,
 }) {
   return (
     <div
@@ -34,7 +37,7 @@ export default function Field({
           objectFit="cover"
           width={400}
           height={150}
-          src={fieldTypes.find((field) => field.id == id).image}
+          src={fieldTypes.find((field) => field.id == fId).image}
         />
         <div className="absolute z-30 top-1 right-1 flex">
           <span
@@ -57,7 +60,7 @@ export default function Field({
           className="text-xl text-custom-p4 font-bold capitalize"
           style={{ fontFamily: ff, lineHeight: 1 }}
         >
-          {fieldTypes.find((field) => field.id == id).name}
+          {fieldTypes.find((field) => field.id == fId).name}
         </div>
         <div
           style={{ fontFamily: ff, lineHeight: 1 }}
@@ -77,7 +80,11 @@ export default function Field({
           />
         </div>
         <div className="mt-2">
-          <Relay power={data?.relay0} />
+          <Relay
+            disabled={moist_auto} //Is moist auto on?
+            power={data?.relay0}
+            onClick={() => sprinklerEvent(!data?.relay0)}
+          />
         </div>
       </div>
     </div>

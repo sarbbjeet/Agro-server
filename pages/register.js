@@ -92,6 +92,7 @@ export default function Register() {
         >
           <div className="w-3/6 relative justify-center md:flex overflow-hidden h-3/5 hidden">
             <Image
+              alt="login"
               src={require("../public/images/login1.jpg")}
               objectFit="cover"
               priority

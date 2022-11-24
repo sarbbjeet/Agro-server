@@ -89,6 +89,7 @@ export default function EditField({
             className="rounded absolute w-8 h-8 right-2 shadow-md cursor-pointer transition-all p-2 bg-[#ee0c0cd8] m-0 hover:bg-custom-p6 active:bg-custom-p6"
           >
             <Image
+              alt="close"
               src={require("../../public/images/close_1.png")}
               objectFit="cover"
             />

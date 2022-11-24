@@ -65,6 +65,7 @@ export default function LoginForm() {
         >
           <div className="relative md:flex justify-center overflow-hidden w-3/6 h-3/5 hidden">
             <Image
+              alt="img"
               src={require("../public/images/iot.jpg")}
               objectFit="cover"
               priority
@@ -88,6 +89,7 @@ export default function LoginForm() {
               </div>
               <div className="flex p-2 justify-center items-center text-center rounded my-2 cursor-pointer bg-custom-purple hover:bg-custom-primary shadow-md">
                 <Image
+                  alt="google"
                   src={require("../public/images/google_icon.svg")}
                   width="20px"
                   height="20px"

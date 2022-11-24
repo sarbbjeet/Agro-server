@@ -35,6 +35,7 @@ export default function Relay({
           style={{ width: 80, height: 70 }}
         >
           <Image
+            alt="sprinkler"
             objectFit="cover"
             src={
               power

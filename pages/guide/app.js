@@ -15,6 +15,7 @@ export default function App() {
             <div className="py-4 flex flex-wrap">
               <div className="relative border-[2px] border-custom-p4 rounded p-1 hover:border-custom-p6 cursor-pointer">
                 <Image
+                  alt="play-store"
                   src={require("../../public/images/play-store_1.png")}
                   objectFit="fill"
                 />
@@ -22,6 +23,7 @@ export default function App() {
 
               <div className="md:ml-2 relative border-[2px] border-custom-p4 rounded p-1 hover:border-custom-p6 cursor-pointer">
                 <Image
+                  alt="app-store"
                   src={require("../../public/images/app-store.png")}
                   objectFit="fill"
                 />
@@ -30,6 +32,7 @@ export default function App() {
           </div>
           <div className="relative w-[250px] ">
             <Image
+              alt="app_image"
               src={require("../../public/images/app_img.png")}
               objectFit="fill"
               //   width={"600px"}

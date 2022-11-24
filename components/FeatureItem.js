@@ -15,7 +15,7 @@ export default function FeatureItem({ title, image, body }) {
       </div>
       <div className="flex">
         <div className="relative md:w-[180px] sm:w-[150px] w-[100px]">
-          <Image src={image} objectFit="fill" />
+          <Image alt="login" src={image} objectFit="fill" />
         </div>
         <div className="pl-2 flex-1">
           <label

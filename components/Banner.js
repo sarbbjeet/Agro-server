@@ -40,6 +40,7 @@ export default function Banner() {
       </div>
       <div className=" flex-1 hidden lg:flex h-4/6 relative shadow rounded transition-all ">
         <Image
+          alt=""
           priority
           src={require("../public/images/iot_img.jpeg")}
           objectFit="cover"

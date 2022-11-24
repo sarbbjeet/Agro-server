@@ -16,6 +16,7 @@ export default function Features() {
         <div className="flex w-full py-4 flex-col md:flex-row">
           <div className="relative max-h-[300px]  md:max-h-min overflow-hidden flex-1 mb-2">
             <Image
+              alt=""
               src={require("../public/images/iot_1.jpg")}
               objectFit="fill"
             />

@@ -6,7 +6,7 @@ export default function SensorFeaturesItem({ title, image, body }) {
   return (
     <div className="flex sm:max-w-[250px]  py-4 ml-4">
       <div className="relative overflow-hidden  sm:w-[300px] w-[100px]">
-        <Image src={image} objectFit="fill" />
+        <Image alt="" src={image} objectFit="fill" />
       </div>
       <div className="px-2  text-custom-p4">
         <label

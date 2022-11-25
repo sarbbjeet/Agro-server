@@ -36,7 +36,7 @@ function MyApp(props) {
       protocolId: "MQIsdp",
       protocolVersion: 3,
       clean: true,
-      clientId: process?.env.NEXT_PUBLIC_MQTT_CLIENTID,
+      clientId: `deviceid=${Date.now().toString()}`, //every user should be assigned unique clientID
     },
   };
   React.useEffect(() => {

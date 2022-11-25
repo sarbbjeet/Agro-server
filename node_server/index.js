@@ -12,7 +12,7 @@ const {
 // For backend only use mqtt and for browser user can use mqtt or ws
 const url = `mqtt://${HOSTNAME}:1883`;
 const options = {
-  clientId: "mqttjs01",
+  clientId: `clientId=${Date.now().toString()}`,
   username: USERNAME,
   password: PASSWORD,
   clean: true,

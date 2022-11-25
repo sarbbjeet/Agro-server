@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "concurrently \"npm run server\" \"npm run generate && next\"",
+        "dev": "concurrently \"node node_server/index.js\" \"npm run generate && next\"",
         "generate": "npx prisma generate",
         "prisma:migrate": "npx prisma migrate deploy",
         "build": "npm run generate && next build",

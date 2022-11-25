@@ -68,7 +68,7 @@ export default function MqttProvider({ brokerConfig, children }) {
       if (!client?.connected)
         //just randomly change the reconnect string value to enable to run loop again
         setReconnect(Date.now().toString());
-    }, 5000);
+    }, 1000);
     return () => clearInterval(timer);
   }, [client]);
 

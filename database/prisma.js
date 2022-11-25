@@ -1,5 +1,6 @@
 //create prisma instance§
-import { PrismaClient } from "@prisma/client";
+// import { PrismaClient } from "@prisma/client";
+const { PrismaClient } = require("@prisma/client");
 let prisma = PrismaClient;
 // if (typeof window != "undefined") {
 if (process.env.NODE_ENV === "production") prisma = new PrismaClient();
@@ -9,4 +10,5 @@ else {
 }
 // }
 
-export { prisma };
+//export { prisma };
+module.exports = { prisma };

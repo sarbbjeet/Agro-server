@@ -3,11 +3,12 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "concurrently \"node node_server/index.js\" \"npm run generate && next\"",
+        "server": "node node_server/index.js",
+        "dev": "concurrently \"npm run server\" \"npm run generate && next\"",
         "generate": "npx prisma generate",
         "prisma:migrate": "npx prisma migrate deploy",
         "build": "npm run generate && next build",
-        "start": "next start -p 3000",
+        "start": "concurrently \"npm run server\" \"next start -p 3000\"",
         "lint": "next lint"
     },
     "dependencies": {

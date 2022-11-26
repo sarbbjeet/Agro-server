@@ -1,23 +1,27 @@
 const { prisma } = require("../../database/prisma");
 // import { prisma } from "../../database/prisma";
 
-const sendNotication = async ({ admin, state, farmerId }) => {
+const sendNotication = async ({ admin, sendToFb, farmerId, state }) => {
   try {
     const tokens = await prisma?.Fcmtoken?.findMany({
       where: {
         farmerId,
       },
     });
-
     //send notications to firebase
     if (tokens.length > 0)
       await admin.messaging().sendMulticast({
         tokens: tokens?.map((tokenObj) => tokenObj?.token),
+        data: { data: JSON.stringify(sendToFb) },
         notification: {
-          title: "Sprinker State",
-          body: `Power ${state ? "On" : "Off"}\n location xyz`,
+          title: `Sprinker ${
+            (sendToFb?.sprinker).toString() == "true" ? "On" : "Off"
+          }`,
+          body: sendToFb?.addr,
           //   imageUrl,
         },
+        priority: "high",
+        contentAvailable: true,
       });
   } catch (err) {
     console.log(err.message);
@@ -87,7 +91,16 @@ const receivedMqtt = async ({ topic, payload, client, admin }) => {
       if (sendMsg) {
         publishToMqtt({ client, farmerId, data: sendMsg });
         //send notification to the app
-        sendNotication({ admin, farmerId, state: objPayload?.data?.relay0 });
+        const sendToFb = {
+          field_type_id: matchedField?.field_type_id,
+          addr: matchedField?.addr,
+          sprinker: !objPayload?.data?.relay0,
+        };
+        sendNotication({
+          admin,
+          farmerId,
+          sendToFb,
+        });
       }
     }
   } catch (err) {

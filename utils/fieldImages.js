@@ -1,4 +1,4 @@
-export const fieldTypes = [
+const fieldTypes = [
   {
     id: 0,
     name: "wheat field",
@@ -10,3 +10,4 @@ export const fieldTypes = [
     image: require("../public/images/field_images/potato.jpeg"),
   },
 ];
+module.exports = { fieldTypes };

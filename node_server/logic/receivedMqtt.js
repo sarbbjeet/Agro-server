@@ -1,5 +1,29 @@
 const { prisma } = require("../../database/prisma");
 // import { prisma } from "../../database/prisma";
+
+const sendNotication = async ({ admin, state, farmerId }) => {
+  try {
+    const tokens = await prisma?.Fcmtoken?.findMany({
+      where: {
+        farmerId,
+      },
+    });
+
+    //send notications to firebase
+    if (tokens.length > 0)
+      await admin.messaging().sendMulticast({
+        tokens,
+        notification: {
+          title: "Sprinker State",
+          body: `Power ${state ? "On" : "Off"}\n location xyz`,
+          //   imageUrl,
+        },
+      });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
 const readFieldDB = async () => {
   try {
     const fields = await prisma?.field.findMany({
@@ -43,7 +67,6 @@ const applyConditions = ({ objPayload, matchedField }) => {
     return sendMsg;
   }
 };
-
 //main loop
 const receivedMqtt = async ({ topic, payload, client, admin }) => {
   try {
@@ -64,16 +87,7 @@ const receivedMqtt = async ({ topic, payload, client, admin }) => {
       if (sendMsg) {
         publishToMqtt({ client, farmerId, data: sendMsg });
         //send notification to the app
-        await admin.messaging().sendMulticast({
-          tokens: [
-            "fWaSxP_GQRKHOfb3JUHe2t:APA91bEG3PfDIfxAjfRHQThScDc_n8K96YtfqoIcvdPEsKFTzudaA1BoxbKNP9O2p5GHIdo0ZaCUrYk9XhJnVVZT39zSg612IWiLCLGePog1YHuKkbM06BWnqic22inzPdQ3eDgjlRAZ",
-          ],
-          notification: {
-            title: "Sprinker State",
-            body: "Power On",
-            //   imageUrl,
-          },
-        });
+        sendNotication({ admin, farmerId, state: objPayload?.data?.relay0 });
       }
     }
   } catch (err) {

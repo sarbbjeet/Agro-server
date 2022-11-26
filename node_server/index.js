@@ -3,11 +3,14 @@ const prisma = new PrismaClient();
 const { default: axios } = require("axios");
 var mqtt = require("mqtt");
 const { receivedMqtt } = require("./logic/receivedMqtt");
+//firebase code
 var admin = require("firebase-admin");
 var serviceAccount = require("../agri_app_firebase.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
+/////////////////////////////////////////
+
 const {
   NEXT_PUBLIC_MQTT_USERNAME: USERNAME,
   NEXT_PUBLIC_MQTT_PASSWORD: PASSWORD,

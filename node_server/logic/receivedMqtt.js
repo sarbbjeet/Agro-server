@@ -12,7 +12,7 @@ const sendNotication = async ({ admin, state, farmerId }) => {
     //send notications to firebase
     if (tokens.length > 0)
       await admin.messaging().sendMulticast({
-        tokens,
+        tokens: tokens?.map((tokenObj) => tokenObj?.token),
         notification: {
           title: "Sprinker State",
           body: `Power ${state ? "On" : "Off"}\n location xyz`,

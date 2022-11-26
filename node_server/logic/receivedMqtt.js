@@ -44,7 +44,8 @@ const applyConditions = ({ objPayload, matchedField }) => {
   }
 };
 
-const receivedMqtt = async ({ topic, payload, client }) => {
+//main loop
+const receivedMqtt = async ({ topic, payload, client, admin }) => {
   try {
     const response = await readFieldDB();
     if (response?.error) return console.log("error->", response?.msg);
@@ -60,7 +61,20 @@ const receivedMqtt = async ({ topic, payload, client }) => {
     );
     if (matchedField) {
       const sendMsg = applyConditions({ matchedField, objPayload });
-      if (sendMsg) publishToMqtt({ client, farmerId, data: sendMsg });
+      if (sendMsg) {
+        publishToMqtt({ client, farmerId, data: sendMsg });
+        //send notification to the app
+        await admin.messaging().sendMulticast({
+          tokens: [
+            "fWaSxP_GQRKHOfb3JUHe2t:APA91bEG3PfDIfxAjfRHQThScDc_n8K96YtfqoIcvdPEsKFTzudaA1BoxbKNP9O2p5GHIdo0ZaCUrYk9XhJnVVZT39zSg612IWiLCLGePog1YHuKkbM06BWnqic22inzPdQ3eDgjlRAZ",
+          ],
+          notification: {
+            title: "Sprinker State",
+            body: "Power On",
+            //   imageUrl,
+          },
+        });
+      }
     }
   } catch (err) {
     console.log(err.message);

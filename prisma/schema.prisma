@@ -24,6 +24,7 @@ created_at DateTime @default(now())
 
 //relational model
 fields Field[]
+fcmtokens Fcmtoken[]
 }
 
 model Field {
@@ -41,6 +42,15 @@ model Field {
   
   farmer User @relation(fields: [farmerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   farmerId String 
+}
+
+model Fcmtoken {
+ id String @id @default(uuid())
+ token String @unique
+ created_at DateTime @default(now())
+ updated_at DateTime @updatedAt
+ farmer User @relation(fields: [farmerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+farmerId String
 }
 
 enum Role {

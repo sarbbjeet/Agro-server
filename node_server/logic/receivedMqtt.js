@@ -13,13 +13,13 @@ const sendNotication = async ({ admin, sendToFb, farmerId, state }) => {
       await admin.messaging().sendMulticast({
         tokens: tokens?.map((tokenObj) => tokenObj?.token),
         data: { data: JSON.stringify(sendToFb) },
-        ////default react native notification
-        // notification: {
-        //   title: `Sprinker ${
-        //     (sendToFb?.sprinker).toString() == "true" ? "On" : "Off"
-        //   }`,
-        //   body: sendToFb?.addr,
-        // },
+        //default react native notification
+        notification: {
+          title: `Sprinker ${
+            (sendToFb?.sprinker).toString() == "true" ? "On" : "Off"
+          }`,
+          body: sendToFb?.addr,
+        },
         priority: "high",
         contentAvailable: true,
       });

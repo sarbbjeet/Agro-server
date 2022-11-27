@@ -101,7 +101,7 @@ export default function About() {
                       aria-controls="pills_mission"
                       aria-selected="true"
                     >
-                      <i className="fas fa-medal fa-2x"></i>{" "}
+                      <i className="fas fa-medal fa-2x"></i>
                       <span className="d-inline-block w-100">Our Mission</span>
                     </a>
                     <a

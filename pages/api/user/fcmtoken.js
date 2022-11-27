@@ -56,6 +56,27 @@ const index = async (req, res) => {
     } catch (err) {
       res.status(400).json({ error: true, msg: err?.message });
     }
+  } else if (req.method == "DELETE") {
+    //delete token
+    try {
+      const {
+        query: { fcmtoken },
+      } = req;
+      //   const token = await prisma.Fcmtoken.findUnique({
+      //     where: {
+      //       token: fcmtoken,
+      //     },
+      //   });
+      //   if (!token) throw new Error("token not matched");
+      await prisma.Fcmtoken?.delete({
+        where: {
+          token: fcmtoken,
+        },
+      });
+      return res.json({ msg: "successfully delete token" });
+    } catch (err) {
+      res.status(400).json({ error: true, msg: err?.message });
+    }
   }
 };
 

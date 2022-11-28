@@ -96,6 +96,9 @@ const deepValidation = async (req) => {
   if (req.method === "PUT" && !field_id) throw new Error("field id is missing");
   const user = await prisma.User.findUnique({
     where: { id: farmer_id },
+    include: {
+      fields: true,
+    },
   });
   if (!user) throw new Error("farmer id is incorrect");
   //http PUT only (validate field_id)
@@ -111,16 +114,23 @@ const deepValidation = async (req) => {
   await validation(req.body);
   const convertedReq = convertToInt(req.body);
   //To check if gateway and node id is already exists
-  const _fg = await prisma.Field.findMany({
-    where: {
-      gateway: convertedReq?.gateway,
-    },
-  });
-  if (_fg?.length > 0 && req.method == "POST") {
-    const _fn = _fg.filter((f) => f?.node == convertedReq?.node);
-    if (_fn.length >= 1)
-      throw new Error("Same gateway and node already exist in the db");
-  }
+  const _matchPair = await user?.fields.find(
+    (fl) =>
+      fl?.node == convertedReq?.node && fl?.gateway == convertedReq?.gateway
+  );
+  if (_matchPair && req.method == "POST")
+    throw new Error("Same gateway and node exists----");
+
+  // const _fg = await prisma.Field.findMany({
+  //   where: {
+  //     gateway: convertedReq?.gateway,
+  //   },
+  // });
+  // if (req.method == "POST") {
+  //   const _fn = _fg.filter((f) => f?.node == convertedReq?.node);
+  //   if (_fn.length >= 1)
+  //     throw new Error("Same gateway and node already exist in the db");
+  // }
   convertedReq["farmerId"] = farmer_id;
   if (
     convertedReq?.moist_auto &&

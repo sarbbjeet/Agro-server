@@ -53,6 +53,15 @@ model Fcmtoken {
 farmerId String
 }
 
+model Chat {
+  id String @id @default(uuid())
+  sender String
+  receiver String
+  group Boolean @default(false)
+  msg String @db.VarChar(4000)
+  created_at DateTime @default(now())
+}
+
 enum Role {
   USER
   ADMIN

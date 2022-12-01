@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import AppHead from "../components/Head";
 import Header from "../components/Header";
 import AppFooter from "../components/AppFooter";
 import { colors } from "../utils/constants";
 import styled from "styled-components";
+import { f2 as ff } from "../styles/variables.module.scss";
+import Image from "next/image";
+import Chat from "./Chat";
 
 const Div = styled.div`
   background-color: ${(props) => props.color};
@@ -19,9 +22,10 @@ const Input = styled.input.attrs((props) => ({
 
 export default function Layout({ children, ...props }) {
   return (
-    <div {...props}>
+    <div {...props} className="overflow-hidden h-full">
       <AppHead />
       <Header />
+      <Chat />
       {children}
       <AppFooter />
     </div>

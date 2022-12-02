@@ -24,12 +24,12 @@ const Message = ({ isSender = true, msg, time = "15:03" }) => (
   </div>
 );
 
-export default function ChatScreen2({ onEvent, ...props }) {
+export default function ChatScreen2({ onEvent, backBtn, closeBtn, ...props }) {
   return (
     <div className="h-full" {...props}>
       <div className="flex w-full h-16 bg-custom-purple relative items-center">
         <div
-          //   onClick={() => setOpenchat(false)}
+          onClick={() => closeBtn(false)}
           className="top-2 rounded absolute w-8 h-8 right-2 shadow-md cursor-pointer transition-all p-2 bg-[#ee0c0cd8] m-0 hover:bg-custom-p6 active:bg-custom-p6"
         >
           <Image
@@ -40,7 +40,10 @@ export default function ChatScreen2({ onEvent, ...props }) {
         </div>
 
         <div className="flex items-center px-2 cursor-pointer">
-          <i className="fas fa-arrow-left fa-lg text-custom-white" />
+          <i
+            onClick={backBtn}
+            className="fas fa-arrow-left fa-lg text-custom-white"
+          />
           <div className="relative mx-3 flex items-center">
             {/* <i className="fas fa-user fa-lg mx-2  text-custom-white"></i> */}
             <Image

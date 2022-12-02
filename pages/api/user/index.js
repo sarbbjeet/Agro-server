@@ -3,6 +3,8 @@ import { prisma } from "../../../database/prisma";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import NextCors from "nextjs-cors";
+import auth from "../../../middleware/auth";
+import _ from "lodash";
 
 export default async function index(req, res) {
   //cors
@@ -14,7 +16,17 @@ export default async function index(req, res) {
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
   if (req.method === "GET") {
-    return res.json({ message: "user page" });
+    try {
+      auth(async (req, res) => {
+        const users = await prisma.User.findMany();
+        const filteredUsers = await users.filter((user) =>
+          _.pick(user, ["name", "last_name", "id", "phone"])
+        );
+        return res.json({ data: filteredUsers });
+      })(req, res);
+    } catch (err) {
+      res.status(404).json({ error: err.message });
+    }
   } else if (req.method === "POST") {
     //create a new user
     try {

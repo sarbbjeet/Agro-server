@@ -1,14 +1,50 @@
+import axios from "axios";
+import { map } from "lodash";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthProvider";
 import { f2 as ff } from "../styles/variables.module.scss";
 import ChatItems from "./ChatItems";
 
-export default function ChatScreen1({ onEvent, ...props }) {
+export default function ChatScreen1({
+  onEvent,
+  closeBtn,
+  selectedUser = () => {},
+  ...props
+}) {
+  const { token, user } = useAuth();
+  const [users, setUsers] = useState([]);
+  const getUsers = async () => {
+    try {
+      const { data: users } = await axios("/api/user", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (users?.data?.length > 0)
+        setUsers(users?.data?.filter((_user) => _user?.id != user?.id));
+      return { msg: users?.data };
+    } catch (err) {
+      return {
+        error: true,
+        msg: "erorr to get users",
+      };
+    }
+  };
+
+  useEffect(() => {
+    const loop = async () => {
+      if (token) await getUsers();
+    };
+    loop();
+  }, [token]);
+
+  useEffect(() => {
+    console.log("users", users);
+  }, [users]);
   return (
     <div className="h-full" {...props}>
       <div className="flex w-full h-18 bg-custom-purple relative">
         <div
-          //   onClick={() => setOpenchat(false)}
+          onClick={() => closeBtn(false)}
           className="top-2 rounded absolute w-8 h-8 right-2 shadow-md cursor-pointer transition-all p-2 bg-[#ee0c0cd8] m-0 hover:bg-custom-p6 active:bg-custom-p6"
         >
           <Image
@@ -35,7 +71,10 @@ export default function ChatScreen1({ onEvent, ...props }) {
         </div>
       </div>
       <div className="body mt-1 bg-[#eee] h-full">
-        <div className="flex items-center px-2 py-4 cursor-pointer bg-[#ddd] mb-1 hover:bg-custom-p4">
+        <div
+          onClick={() => selectedUser({ group: true })}
+          className="flex items-center px-2 py-4 cursor-pointer bg-[#ddd] mb-1 hover:bg-custom-p4"
+        >
           <i className="fas fa-users fa-2x cursor-pointer" />
           <label className="ml-2 cursor-pointer" style={{ fontFamily: ff }}>
             Group Chat
@@ -47,18 +86,24 @@ export default function ChatScreen1({ onEvent, ...props }) {
             Personal Chats
           </label>
           <span className="h-[1px] bg-[#ccc]" />
-          {/* <div className="my-2">
-              <label style={{ fontFamily: ff }}>List is empty</label>
-            </div> */}
+
           <div className="overflow-scroll my-2 h-[350px] pb-16">
             {/* <div className="pt-2 overflow-scroll"> */}
-            <ChatItems />
-            <ChatItems name="malkeet" />
-            <ChatItems name="malkeet" />
-            <ChatItems name="malkeet" />
-
-            <ChatItems name="malkeet" />
-            <ChatItems name="malkeet" />
+            {users.length == 0 ? (
+              <div className="my-2">
+                <label style={{ fontFamily: ff }}>List is empty</label>
+              </div>
+            ) : (
+              users?.map((user, i) => (
+                <ChatItems
+                  key={i}
+                  onClick={() => selectedUser(user)}
+                  name={`${user?.name} ${
+                    user?.last_name ? user?.last_name : ""
+                  }`}
+                />
+              ))
+            )}
             {/* </div> */}
           </div>
         </div>

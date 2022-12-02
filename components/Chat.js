@@ -7,6 +7,7 @@ import ChatScreen2 from "./ChatScreen2";
 
 export default function Chat() {
   const [openchat, setOpenchat] = useState(false);
+  const [chatScreen, setChatScreen] = useState(false);
   return (
     <div>
       <div className="fixed bottom-10 right-5 z-30 transition-all">
@@ -17,13 +18,27 @@ export default function Chat() {
           />
         )}
       </div>
-
       <div
         className={`overflow-hidden transition-all max-h-[500px] min-h-[70vh]  bg-custom-white w-[380px] fixed z-[102] bottom-5 right-5 ${
           !openchat && "-right-[420px]"
         }`}
       >
-        <ChatScreen1 />
+        {!chatScreen ? (
+          <ChatScreen1
+            closeBtn={() => setOpenchat(false)}
+            selectedUser={(user) => setChatScreen(true)}
+          />
+        ) : (
+          <ChatScreen2
+            backBtn={
+              () => setChatScreen(false) //back to first screen
+            }
+            closeBtn={() => {
+              setOpenchat(false);
+              setChatScreen(false); //back to first screen
+            }}
+          />
+        )}
       </div>
     </div>
   );

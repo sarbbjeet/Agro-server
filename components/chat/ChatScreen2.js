@@ -1,7 +1,25 @@
+import { selectClasses } from "@mui/material";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useAuth } from "../../context/AuthProvider";
+import { useChat } from "../../context/ChatProvider";
 import ChatMessage from "./ChatMessage";
 import Screen2HeaderText from "./Screen2HeaderText";
+
+//ascending chats
+const ascending = (conversations) => {
+  for (let c = 0; c < conversations.length; c++) {
+    if (c != 0) {
+      if (conversations[c]?.created_at <= conversations[c - 1]?.created_at) {
+        const temp = conversations[c];
+        conversations[c] = conversations[c - 1];
+        conversations[c - 1] = temp;
+        c = 0;
+      }
+    }
+  }
+  return conversations;
+};
 
 export default function ChatScreen2({
   onEvent,
@@ -10,6 +28,52 @@ export default function ChatScreen2({
   selectedUser,
   ...props
 }) {
+  const { user } = useAuth();
+  const { getConversation, sendMessage } = useChat();
+  const [conversations, setConversations] = useState([]);
+  const [message, setMessage] = useState("");
+  const bottomRef = useRef(null); //handle auto scroll down to bottom
+
+  const loadConversations = async () => {
+    if (selectedUser?.id)
+      setConversations(
+        await ascending(await getConversation({ receiverId: selectedUser?.id }))
+      );
+  };
+
+  const onClick = async () => {
+    const response = await sendMessage({ receiver: selectedUser?.id, message });
+    if (!response?.error) {
+      loadConversations();
+      setMessage("");
+    }
+  };
+
+  useEffect(() => {
+    loadConversations();
+  }, [selectedUser]);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    console.log("conversations", conversations);
+  }, [conversations]);
+
+  const displayChat = (conversations) =>
+    conversations.length > 0 &&
+    conversations.map((conversation, i) => (
+      <ChatMessage
+        key={i}
+        msg={conversation?.msg}
+        isSender={conversation?.sender != user?.id}
+        time={
+          new Date(conversation?.created_at).getHours().toString() +
+          ":" +
+          ((new Date(conversation?.created_at).getMinutes() < 10 ? "0" : "") +
+            new Date(conversation?.created_at).getMinutes())
+        }
+      />
+    ));
+
   return (
     <div className="h-full" {...props}>
       <div className="flex w-full h-16 bg-custom-purple relative items-center">
@@ -34,25 +98,23 @@ export default function ChatScreen2({
       </div>
       <div className="body flex flex-col  h-[430px] min-h-[60vh]">
         <div className="bg-[#ccc] flex flex-col pt-2 overflow-scroll h-[370px] min-h-[50vh]">
-          <ChatMessage msg="hello" />
-          <ChatMessage isSender={false} msg="i am good" />
-          <ChatMessage isSender={false} msg="and u?" time="15:07" />
-          <ChatMessage isSender={true} msg="good my friend" time="15:08" />
-          <ChatMessage isSender={true} msg="where r u today?" time="15:08" />
-          <ChatMessage isSender={false} msg="at home" time="15:10" />
-          <ChatMessage
-            isSender={false}
-            msg="today some home stuff"
-            time="15:10"
-          />
+          {displayChat(conversations)}
+          <div ref={bottomRef} />
         </div>
         <div className="flex flex-col justify-center h-[70px] mt-auto">
           <div className="flex mx-2 border">
             <input
+              value={message}
+              onChange={({ target: { value } }) => {
+                setMessage(value);
+              }}
               placeholder="Send a message"
               className="bg-custom-white p-2 w-full"
             />
-            <div className="cursor-pointer p-2 bg-custom-purple text-custom-white hover:bg-custom-primary">
+            <div
+              onClick={onClick}
+              className="cursor-pointer p-2 bg-custom-purple text-custom-white hover:bg-custom-primary"
+            >
               Send
             </div>
           </div>

@@ -14,7 +14,7 @@ export default class MyDocument extends Document {
           <meta name="theme-color" content={theme.palette.primary.main} />
           <meta
             httpEquiv="Content-Security-Policy"
-            content="upgrade-insecure-requests"
+            content="upgrade-insecure-requests" //request is always send to secured url https or wss
           />
           <meta
             property="og:image"

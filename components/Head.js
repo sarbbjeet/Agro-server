@@ -7,7 +7,7 @@ export default function AppHead() {
       <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
       <meta
         httpEquiv="Content-Security-Policy"
-        content="upgrade-insecure-requests"
+        content="upgrade-insecure-requests" //request is always send to secured url https or wss
       />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link href="/images/monitoring.png" rel="shortcut icon" />

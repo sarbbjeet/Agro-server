@@ -1,3 +1,9 @@
+/*
+a sample code of socket sever 
+
+
+*/
+
 const express = require("express");
 const app = express();
 const server = require("http").createServer(app);

@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 const ChatContext = createContext();
 const userUrl = "/api/user";
+const chatUrl = "/api/user/chat";
 import { useAuth } from "./AuthProvider";
 
 export default function ChatProvider({ children }) {
@@ -30,13 +31,48 @@ export default function ChatProvider({ children }) {
     }
   };
 
+  //get conversation between 2 users
+  const getConversation = async ({ receiverId }) => {
+    try {
+      const { data: conversations } = await axios(
+        `${chatUrl}?receiver=${receiverId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      return conversations?.data ? conversations?.data : [];
+    } catch (err) {
+      console.log("errior", err?.message);
+      return { error: true, msg: err?.message };
+    }
+  };
+
+  const sendMessage = async ({ receiver, message }) => {
+    try {
+      await axios(`${chatUrl}`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        data: {
+          msg: message,
+          receiver,
+        },
+      });
+      return { msg: "successfully sent message" };
+    } catch (err) {
+      console.log("error");
+      return { error: true, msg: err?.message };
+    }
+  };
+
   //get users when token is changed or available
   useEffect(() => {
     if (token) getUsers();
   }, [token]);
 
   return (
-    <ChatContext.Provider value={{ users, getUsers }}>
+    <ChatContext.Provider
+      value={{ users, getUsers, getConversation, sendMessage }}
+    >
       {children}
     </ChatContext.Provider>
   );

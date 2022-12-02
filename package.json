@@ -5,11 +5,11 @@
     "scripts": {
         "socket": "node node_server/socket_server.js",
         "server": "node node_server/index.js",
-        "dev": "concurrently \"npm run server\" \"npm run socket\" \"npm run generate && next\"",
+        "dev": "concurrently \"npm run server\" \"npm run generate && next\"",
         "generate": "npx prisma generate",
         "prisma:migrate": "npx prisma migrate deploy",
         "build": "npm run generate && next build",
-        "start": "concurrently \"npm run server\"  \"npm run socket\"  \"next start -p 3000\"",
+        "start": "concurrently \"npm run server\"   \"next start -p 3000\"",
         "lint": "next lint"
     },
     "dependencies": {

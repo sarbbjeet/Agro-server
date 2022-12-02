@@ -22,20 +22,15 @@ const index = async (req, res) => {
       const {
         query: { receiver },
       } = req;
+      const allChats = await prisma.Chat.findMany();
+      if (!allChats?.length > 0 || !receiver) return res.json({ data: [] }); //return empty
 
-      const senders = await prisma.Chat.findMany({
-        where: {
-          sender: req?.user?.id,
-        },
-      });
-      if (!receiver) {
-        return res.json({ data: senders });
-      }
-      if (senders.length == 0) throw new Error("senders list is empty");
-      const filtered_senders = await senders?.filter(
-        (s) => s?.receiver == receiver
+      const conversationBw = allChats?.filter(
+        (c) =>
+          (c?.sender == req?.user?.id && c?.receiver == receiver) ||
+          (c?.sender == receiver && c?.receiver == req?.user?.id)
       );
-      return res.json({ data: filtered_senders });
+      return res.json({ data: conversationBw }); //return empty
     } catch (err) {
       res.status(400).json({ error: true, msg: err?.message });
     }

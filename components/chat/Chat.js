@@ -1,15 +1,17 @@
 import React, { useState } from "react";
+import { useAuth } from "../../context/AuthProvider";
 import ChatScreen1 from "./ChatScreen1";
 import ChatScreen2 from "./ChatScreen2";
 
 export default function Chat() {
   const [openchat, setOpenchat] = useState(false);
   const [chatScreen, setChatScreen] = useState(false);
+  const { user } = useAuth();
   const [selectedUser, setSelectedUser] = useState({});
   return (
     <div>
       <div className="fixed bottom-10 right-5 z-30 transition-all">
-        {!openchat && (
+        {user?.id && !openchat && (
           <i
             onClick={() => setOpenchat(true)}
             className="transition-colors hover:bg-custom-p6 hover:text-custom-purple cursor-pointer fas fa-comment fa-2x bg-custom-white text-custom-primary p-3 rounded-full shadow"

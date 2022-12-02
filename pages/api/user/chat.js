@@ -20,10 +20,15 @@ const index = async (req, res) => {
     //get all token list belong to farmer id
     try {
       const {
-        query: { receiver },
+        query: { receiver, group },
       } = req;
       const allChats = await prisma.Chat.findMany();
-      if (!allChats?.length > 0 || !receiver) return res.json({ data: [] }); //return empty
+      if (!allChats?.length > 0) return res.json({ data: [] }); //return empty
+      else if (group)
+        return res.json({
+          data: await allChats.filter((chat) => chat?.group),
+        });
+      else if (!receiver) return res.json({ data: [] }); //return empty
 
       const conversationBw = allChats?.filter(
         (c) =>
@@ -66,7 +71,7 @@ const index = async (req, res) => {
 
 const validation = async (data) => {
   const schema = Joi.object({
-    receiver: Joi.string().required(),
+    receiver: Joi.string(),
     msg: Joi.string().required(),
     group: Joi.bool(),
   });

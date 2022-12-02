@@ -9,6 +9,14 @@ export default function ChatProvider({ children }) {
   const { user, token } = useAuth();
   const [users, setUsers] = useState([]);
 
+  //convert user id to name
+  const getUserName = (id) => {
+    if (users.length > 0) {
+      const getUser = users?.find((user) => user?.id == id);
+      return `${getUser?.name} ${getUser?.last_name ? getUser?.last_name : ""}`;
+    }
+    return "NA";
+  };
   const getUsers = async () => {
     try {
       const { data: users } = await axios(userUrl, {
@@ -32,14 +40,14 @@ export default function ChatProvider({ children }) {
   };
 
   //get conversation between 2 users
-  const getConversation = async ({ receiverId }) => {
+  const getConversation = async ({ receiverId, group }) => {
     try {
-      const { data: conversations } = await axios(
-        `${chatUrl}?receiver=${receiverId}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const _url = `${chatUrl}${
+        group ? `?group=true` : `?receiver=${receiverId}`
+      }`;
+      const { data: conversations } = await axios(_url, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       return conversations?.data ? conversations?.data : [];
     } catch (err) {
       console.log("errior", err?.message);
@@ -47,19 +55,24 @@ export default function ChatProvider({ children }) {
     }
   };
 
-  const sendMessage = async ({ receiver, message }) => {
+  const sendMessage = async ({ receiver, message, group }) => {
     try {
       await axios(`${chatUrl}`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
-        data: {
-          msg: message,
-          receiver,
-        },
+        data: group
+          ? {
+              msg: message,
+              group,
+            }
+          : {
+              msg: message,
+              receiver,
+            },
       });
       return { msg: "successfully sent message" };
     } catch (err) {
-      console.log("error");
+      console.log("error", err);
       return { error: true, msg: err?.message };
     }
   };
@@ -71,7 +84,7 @@ export default function ChatProvider({ children }) {
 
   return (
     <ChatContext.Provider
-      value={{ users, getUsers, getConversation, sendMessage }}
+      value={{ users, getUsers, getConversation, sendMessage, getUserName }}
     >
       {children}
     </ChatContext.Provider>

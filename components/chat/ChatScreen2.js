@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../context/AuthProvider";
 import { useChat } from "../../context/ChatProvider";
+import { useMqtt } from "../../context/MqttProvider";
 import ChatMessage from "./ChatMessage";
 import Screen2HeaderText from "./Screen2HeaderText";
 
@@ -29,33 +30,49 @@ export default function ChatScreen2({
   ...props
 }) {
   const { user } = useAuth();
-  const { getConversation, sendMessage } = useChat();
+  const { notify, chatNotifyPub } = useMqtt();
+  const { getConversation, sendMessage, getUserName } = useChat();
   const [conversations, setConversations] = useState([]);
   const [message, setMessage] = useState("");
   const bottomRef = useRef(null); //handle auto scroll down to bottom
 
   const loadConversations = async () => {
-    if (selectedUser?.id)
+    if (selectedUser?.id || selectedUser?.group)
       setConversations(
-        await ascending(await getConversation({ receiverId: selectedUser?.id }))
+        await ascending(
+          await getConversation({
+            receiverId: selectedUser?.id,
+            group: selectedUser?.group,
+          })
+        )
       );
   };
 
   const onClick = async () => {
-    const response = await sendMessage({ receiver: selectedUser?.id, message });
+    const response = await sendMessage({
+      receiver: selectedUser?.id,
+      message,
+      group: selectedUser?.group ? true : false,
+    });
     if (!response?.error) {
       loadConversations();
       setMessage("");
+      //mqtt publisher to notify receiver about new message arrival
+      //if group is undefined then notify according to receiver id else group notify
+      chatNotifyPub({
+        notifyId: selectedUser?.group ? "abc" : selectedUser?.id,
+        group: selectedUser?.group,
+      });
     }
   };
 
   useEffect(() => {
     loadConversations();
-  }, [selectedUser]);
+  }, [selectedUser, notify]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-    console.log("conversations", conversations);
+    // console.log("conversations", conversations);
   }, [conversations]);
 
   const displayChat = (conversations) =>
@@ -65,6 +82,7 @@ export default function ChatScreen2({
         key={i}
         msg={conversation?.msg}
         isSender={conversation?.sender != user?.id}
+        senderName={getUserName(conversation?.sender)}
         time={
           new Date(conversation?.created_at).getHours().toString() +
           ":" +

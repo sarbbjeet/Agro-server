@@ -12,6 +12,8 @@ export default function MqttProvider({ brokerConfig, children }) {
   const [allReceived, setAllReceived] = React.useState([]);
   const [scannedList, setScannedList] = React.useState([]);
   const [reconnect, setReconnect] = React.useState("");
+  const [notify, setNotify] = React.useState(""); //event when new messsge arrived
+
   const { login, user, isAuthenticated, loading } = useAuth();
   const ref_client = useRef();
 
@@ -23,6 +25,8 @@ export default function MqttProvider({ brokerConfig, children }) {
       newClient.on("connect", () => {
         //subcribe topic
         newClient?.subscribe(`/outTopic/${user?.id}`);
+        newClient?.subscribe(`/chatNotify/${user?.id}`); //event when new message received
+        newClient?.subscribe(`/chatNotify/group`); //when group message received
         console.log("user id=", `/outTopic/${user?.id}`);
         console.log("new client connected");
         setClient(newClient);
@@ -45,7 +49,8 @@ export default function MqttProvider({ brokerConfig, children }) {
         try {
           const json = JSON.parse(new TextDecoder("utf-8").decode(message));
           //verify recived data is correct
-          const { gateway, node } = json;
+          const { gateway, node, notifyId } = json;
+          if (notifyId) setNotify(Date.now().toString()); //just event to notify new message arrived
           if (gateway == undefined || node == undefined)
             throw new Error("invaild json data received");
           //enter time stamping with received data
@@ -121,6 +126,17 @@ export default function MqttProvider({ brokerConfig, children }) {
       )
     );
   }, [allReceived]);
+  //notify group if group true
+  const chatNotifyPub = ({ notifyId, group }) => {
+    try {
+      ref_client?.current?.publish(
+        `/chatNotify/${group ? "group" : notifyId}`,
+        JSON.stringify({ notifyId })
+      );
+    } catch (err) {
+      console.log("error to publish mqtt", err.message);
+    }
+  };
 
   const publish_data = (msg) => {
     try {
@@ -137,7 +153,14 @@ export default function MqttProvider({ brokerConfig, children }) {
 
   return (
     <MqttContext.Provider
-      value={{ client, allReceived, publish_data, scannedList }}
+      value={{
+        client,
+        allReceived,
+        publish_data,
+        scannedList,
+        notify,
+        chatNotifyPub,
+      }}
     >
       {children}
     </MqttContext.Provider>

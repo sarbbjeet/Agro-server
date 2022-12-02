@@ -23,7 +23,8 @@ const Input = styled.input.attrs((props) => ({
 
 export default function Layout({ children, ...props }) {
   return (
-    <div {...props} className="overflow-hidden h-full">
+    <div {...props}>
+      {/* <div {...props} className="overflow-hidden h-full"> */}
       <AppHead />
       <Header />
       <ChatProvider>

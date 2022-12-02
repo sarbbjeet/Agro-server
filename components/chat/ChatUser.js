@@ -1,8 +1,8 @@
 import Image from "next/image";
 import React from "react";
-import { f2 as ff } from "../styles/variables.module.scss";
+import { f2 as ff } from "../../styles/variables.module.scss";
 
-export default function ChatItems({ image, name = "sarb", onClick }) {
+export default function ChatUser({ image, name = "sarb", onClick }) {
   return (
     <div
       onClick={onClick}
@@ -11,7 +11,7 @@ export default function ChatItems({ image, name = "sarb", onClick }) {
       <div className="relative w-10">
         <Image
           className="rounded-full cursor-pointer"
-          src={require("../public/images/profile-icon.png")}
+          src={require("../../public/images/profile-icon.png")}
           objectFit="fill"
         />
       </div>

@@ -6,7 +6,8 @@ import { colors } from "../utils/constants";
 import styled from "styled-components";
 import { f2 as ff } from "../styles/variables.module.scss";
 import Image from "next/image";
-import Chat from "./Chat";
+import Chat from "./chat/Chat";
+import ChatProvider from "../context/ChatProvider";
 
 const Div = styled.div`
   background-color: ${(props) => props.color};
@@ -25,7 +26,9 @@ export default function Layout({ children, ...props }) {
     <div {...props} className="overflow-hidden h-full">
       <AppHead />
       <Header />
-      <Chat />
+      <ChatProvider>
+        <Chat />
+      </ChatProvider>
       {children}
       <AppFooter />
     </div>

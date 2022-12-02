@@ -1,13 +1,11 @@
-import Image from "next/image";
 import React, { useState } from "react";
-import { f2 as ff } from "../styles/variables.module.scss";
-import ChatItems from "./ChatItems";
 import ChatScreen1 from "./ChatScreen1";
 import ChatScreen2 from "./ChatScreen2";
 
 export default function Chat() {
   const [openchat, setOpenchat] = useState(false);
   const [chatScreen, setChatScreen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState({});
   return (
     <div>
       <div className="fixed bottom-10 right-5 z-30 transition-all">
@@ -26,10 +24,14 @@ export default function Chat() {
         {!chatScreen ? (
           <ChatScreen1
             closeBtn={() => setOpenchat(false)}
-            selectedUser={(user) => setChatScreen(true)}
+            selectedUser={(user) => {
+              setSelectedUser(user);
+              setChatScreen(true);
+            }}
           />
         ) : (
           <ChatScreen2
+            selectedUser={selectedUser}
             backBtn={
               () => setChatScreen(false) //back to first screen
             }

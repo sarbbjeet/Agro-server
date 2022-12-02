@@ -1,10 +1,8 @@
-import axios from "axios";
-import { map } from "lodash";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthProvider";
-import { f2 as ff } from "../styles/variables.module.scss";
-import ChatItems from "./ChatItems";
+import { useChat } from "../../context/ChatProvider";
+import { f2 as ff } from "../../styles/variables.module.scss";
+import ChatUser from "./ChatUser";
 
 export default function ChatScreen1({
   onEvent,
@@ -12,34 +10,8 @@ export default function ChatScreen1({
   selectedUser = () => {},
   ...props
 }) {
-  const { token, user } = useAuth();
-  const [users, setUsers] = useState([]);
-  const getUsers = async () => {
-    try {
-      const { data: users } = await axios("/api/user", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (users?.data?.length > 0)
-        setUsers(users?.data?.filter((_user) => _user?.id != user?.id));
-      return { msg: users?.data };
-    } catch (err) {
-      return {
-        error: true,
-        msg: "erorr to get users",
-      };
-    }
-  };
+  const { users } = useChat();
 
-  useEffect(() => {
-    const loop = async () => {
-      if (token) await getUsers();
-    };
-    loop();
-  }, [token]);
-
-  useEffect(() => {
-    console.log("users", users);
-  }, [users]);
   return (
     <div className="h-full" {...props}>
       <div className="flex w-full h-18 bg-custom-purple relative">
@@ -49,7 +21,7 @@ export default function ChatScreen1({
         >
           <Image
             alt="close"
-            src={require("../public/images/close_1.png")}
+            src={require("../../public/images/close_1.png")}
             objectFit="cover"
           />
         </div>
@@ -95,7 +67,7 @@ export default function ChatScreen1({
               </div>
             ) : (
               users?.map((user, i) => (
-                <ChatItems
+                <ChatUser
                   key={i}
                   onClick={() => selectedUser(user)}
                   name={`${user?.name} ${

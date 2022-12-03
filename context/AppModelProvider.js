@@ -11,6 +11,7 @@ export const ModelContext = React.createContext(null);
 export default function AppModelProvider({ openScan = false, children }) {
   const { token } = useAuth();
   const [openScanModel, setScanModel] = useState(false);
+  const [stopScrolling, setStopScrolling] = useState(false);
   const [deleteModel, setDeleteModel] = useState({
     open: false,
     id: "",
@@ -20,11 +21,18 @@ export default function AppModelProvider({ openScan = false, children }) {
     selectedField: {},
     isUpdate: false,
   };
+  const [fieldModel, setFieldModel] = useState(_initialFieldModel);
   useEffect(() => {
     setScanModel(openScan);
   }, [openScan]);
-  const [fieldModel, setFieldModel] = useState(_initialFieldModel);
-  const Router = useRouter();
+
+  useEffect(() => {
+    _setStopScrolling(openScanModel);
+  }, [openScanModel]);
+
+  useEffect(() => {
+    _setStopScrolling(fieldModel?.open);
+  }, [fieldModel]);
 
   const onDeleteField = async () => {
     try {
@@ -39,6 +47,9 @@ export default function AppModelProvider({ openScan = false, children }) {
       console.log(err.message);
     }
   };
+
+  const _setStopScrolling = (state) => setStopScrolling(state);
+
   const scanModel = (open) => {
     setScanModel(open);
   };
@@ -50,7 +61,15 @@ export default function AppModelProvider({ openScan = false, children }) {
   };
 
   return (
-    <ModelContext.Provider value={{ scanModel, deleteField, editField }}>
+    <ModelContext.Provider
+      value={{
+        scanModel,
+        deleteField,
+        editField,
+        _setStopScrolling,
+        stopScrolling,
+      }}
+    >
       {openScanModel && (
         <ScanForField
           closeModel={setScanModel}

@@ -59,7 +59,7 @@ export default function ChatScreen1({
           </label>
           <span className="h-[1px] bg-[#ccc]" />
 
-          <div className="overflow-scroll my-2 h-[350px] pb-16">
+          <div className="overflow-scroll my-2 h-[35vh] sm:h-[40vh] pb-16">
             {/* <div className="pt-2 overflow-scroll"> */}
             {users.length == 0 ? (
               <div className="my-2">

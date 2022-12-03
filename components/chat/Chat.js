@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useAppModel } from "../../context/AppModelProvider";
 import { useAuth } from "../../context/AuthProvider";
 import ChatScreen1 from "./ChatScreen1";
 import ChatScreen2 from "./ChatScreen2";
@@ -7,7 +8,13 @@ export default function Chat() {
   const [openchat, setOpenchat] = useState(false);
   const [chatScreen, setChatScreen] = useState(false);
   const { user } = useAuth();
+  const { _setStopScrolling } = useAppModel();
   const [selectedUser, setSelectedUser] = useState({});
+
+  useEffect(() => {
+    _setStopScrolling(openchat);
+  }, [openchat]);
+
   return (
     <div>
       <div className="fixed bottom-10 right-5 z-30 transition-all">
@@ -19,9 +26,11 @@ export default function Chat() {
         )}
       </div>
       <div
-        className={`overflow-hidden transition-all max-h-[500px] min-h-[70vh]  bg-custom-white w-[380px] fixed z-[102] bottom-5 right-5 ${
-          !openchat && "-right-[420px]"
-        }`}
+        className={`overflow-scroll transition-all  bg-custom-white w-[96%] sm:w-[380px]  fixed z-[102]  top-[20%] ${
+          openchat ? "right-2" : "-right-[450px]"
+        } 
+          
+        `}
       >
         {!chatScreen ? (
           <ChatScreen1

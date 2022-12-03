@@ -94,7 +94,7 @@ export default function ChatScreen2({
 
   return (
     <div className="h-full" {...props}>
-      <div className="flex w-full h-16 bg-custom-purple relative items-center">
+      <div className="flex w-full h-12 sm:h-16 bg-custom-purple relative items-center">
         <div
           onClick={() => closeBtn(false)}
           className="top-2 rounded absolute w-8 h-8 right-2 shadow-md cursor-pointer transition-all p-2 bg-[#ee0c0cd8] m-0 hover:bg-custom-p6 active:bg-custom-p6"
@@ -114,12 +114,12 @@ export default function ChatScreen2({
           <Screen2HeaderText selectedUser={selectedUser} />
         </div>
       </div>
-      <div className="body flex flex-col  h-[430px] min-h-[60vh]">
-        <div className="bg-[#ccc] flex flex-col pt-2 overflow-scroll h-[370px] min-h-[50vh]">
+      <div className="body flex flex-col">
+        <div className="bg-[#ccc] flex flex-col pt-2 overflow-scroll h-[45vh] sm:h-[50vh] ">
           {displayChat(conversations)}
           <div ref={bottomRef} />
         </div>
-        <div className="flex flex-col justify-center h-[70px] mt-auto">
+        <div className="flex flex-col justify-center h-[50px] sm:h-[70px]">
           <div className="flex mx-2 border">
             <input
               value={message}

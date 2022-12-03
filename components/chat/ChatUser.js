@@ -10,6 +10,7 @@ export default function ChatUser({ image, name = "sarb", onClick }) {
     >
       <div className="relative w-10">
         <Image
+          alt="profile"
           className="rounded-full cursor-pointer"
           src={require("../../public/images/profile-icon.png")}
           objectFit="fill"

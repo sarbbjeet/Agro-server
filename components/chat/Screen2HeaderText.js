@@ -6,6 +6,7 @@ export default function Screen2HeaderText({ selectedUser }) {
   return !selectedUser?.group ? (
     <div className="relative mx-3 flex items-center">
       <Image
+        alt="user_img"
         src={require("../../public/images/user.png")}
         width="35px"
         height="35px"

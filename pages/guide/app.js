@@ -12,7 +12,7 @@ const Item = ({ txt, image }) => (
       </label>
     </div>
     <div className="relative h-[350px] flex w-[250px]">
-      <Image src={image} />
+      <Image alt="general image" src={image} />
     </div>
   </div>
 );

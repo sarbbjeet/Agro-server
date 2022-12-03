@@ -40,6 +40,7 @@ export default function Gateway() {
             </div>
             <div className="relative flex-1 flex py-2 px-4">
               <Image
+                alt="gateway_hardware"
                 objectFit="fill"
                 src={require("../../public/images/gateway_hardware.jpeg")}
               />
@@ -60,6 +61,7 @@ export default function Gateway() {
           <div className="lg:h-[420px] my-12 overflow-hidden flex justify-center flex-wrap">
             <div className="relative w-[300px] h-[400px] lg:h-full overflow-hidden mb-2">
               <Image
+                alt="settings"
                 objectFit="cover"
                 src={require("../../public/images/app_sshot/settings.jpg")}
               />
@@ -69,7 +71,8 @@ export default function Gateway() {
                 className="m-0 w-[300px] lg:w-[500px]  md:text-lg text-[#ccc]"
                 style={{ fontFamily: ff }}
               >
-                Install the app, log in, and then click the "Gateway Settings"
+                Install the app, log in, and then click the
+                <span className="font-semibold"> Gateway Settings </span>
                 button to push network configuration to the gateway. This helps
                 the gateway connect to the cloud server and post sensor results.
               </label>

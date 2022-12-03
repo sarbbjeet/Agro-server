@@ -6,7 +6,7 @@ import { f2 as ff } from "../../styles/variables.module.scss";
 const Sensor = ({ title, price, image }) => (
   <div className="mb-2 w-[200px] border-[1px] border-[#ccc] flex flex-col overflow-hidden p-1 shadow">
     <div className="relative overflow-hidden flex h-40">
-      <Image objectFit="fill" src={image} />
+      <Image alt="sensors" objectFit="fill" src={image} />
     </div>
     <div>
       <label

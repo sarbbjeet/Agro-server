@@ -8,6 +8,8 @@ import Features from "../components/Features";
 import Importance from "../components/Importance";
 import SensorsFeatures from "../components/SensorsFeatures";
 import { colors } from "../utils/constants";
+import { f2 as ff } from "../styles/variables.module.scss";
+import DownloadApp from "../components/DownloadApp";
 
 export default function Home() {
   return (
@@ -20,6 +22,8 @@ export default function Home() {
         <Importance />
         <Features />
         <SensorsFeatures />
+
+        <DownloadApp />
       </main>
       <style jsx>
         {`

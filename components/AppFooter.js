@@ -31,7 +31,7 @@ export default function AppFooter() {
 
             <ul className="list-unstyled">
               <li className="list-inline-item w-100">
-                <Link href="/about/page">
+                <Link href="/about">
                   <a
                     className="btn btn-block  btn-dark text-left border-0 px-1"
                     title=""
@@ -51,7 +51,7 @@ export default function AppFooter() {
                 </Link>
               </li>
               <li className="list-inline-item w-100">
-                <Link href="/finance">
+                <Link href="/guide/app">
                   <a
                     className="btn btn-block btn-dark text-left border-0 px-1"
                     title=""

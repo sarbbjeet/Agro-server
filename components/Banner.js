@@ -13,7 +13,7 @@ export default function Banner() {
           className="tagLine text-4xl"
           style={{ fontFamily: ff, fontWeight: 700 }}
         >
-          Making agriculture easy with IOT technologies
+          Making agriculture easy with IoT technologies
         </div>
         <ul
           className="features my-4"

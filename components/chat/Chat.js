@@ -27,7 +27,7 @@ export default function Chat() {
       </div>
       <div
         className={`overflow-scroll transition-all  bg-custom-white w-[96%] sm:w-[380px]  fixed z-[102]  top-[20%] ${
-          openchat ? "right-2" : "-right-[450px]"
+          openchat ? "right-2" : "-right-[700px]"
         } 
           
         `}

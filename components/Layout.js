@@ -27,7 +27,7 @@ export default function Layout({ children, ...props }) {
   return (
     // <div {...props}>
     // cover your code wiith className="overflow-hidden  h-screen" to stop scrolling under model
-    <div {...props} className={stopScrolling && `overflow-hidden  h-screen`}>
+    <div className={stopScrolling && `overflow-hidden h-screen`} {...props}>
       <AppHead />
       <Header />
       <ChatProvider>

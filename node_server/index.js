@@ -21,8 +21,8 @@ const {
 const url = `mqtt://${HOSTNAME}:1883`;
 const options = {
   clientId: `clientId=${Date.now().toString()}`,
-  username: USERNAME,
-  password: PASSWORD,
+  // username: USERNAME,
+  // password: PASSWORD,
   clean: true,
 };
 const client = mqtt.connect(url, options);

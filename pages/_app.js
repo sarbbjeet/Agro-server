@@ -25,18 +25,32 @@ Router.events.on("routeChangeError", () => NProgress.done());
 
 function MyApp(props) {
   const { Component, pageProps } = props;
+  const host = "ws://broker.emqx.io:8083/mqtt";
   const brokerConfig = {
     //url: "ws://88.208.242.97:8081",
     // url: "mqtt://localhost:1883",
     //url: "mqtt://test.mosquitto.org:8081",
+    //url: "ws://broker.emqx.io:8084/mqtt",
     url: process?.env.NEXT_PUBLIC_MQTT_URL || "ws://localhost:8081",
     options: {
-      username: process?.env.NEXT_PUBLIC_MQTT_USERNAME,
-      password: process?.env.NEXT_PUBLIC_MQTT_PASSWORD,
-      protocolId: "MQIsdp",
-      protocolVersion: 3,
+      // username: process?.env.NEXT_PUBLIC_MQTT_USERNAME,
+      // password: process?.env.NEXT_PUBLIC_MQTT_PASSWORD,
+      // protocolId: "MQIsdp",
+      // protocolVersion: 3,
+      protocolId: "MQTT",
+      protocolVersion: 4,
       clean: true,
+      keepalive: 60,
       clientId: `deviceid=${Date.now().toString()}`, //every user should be assigned unique clientID
+
+      reconnectPeriod: 1000,
+      connectTimeout: 30 * 1000,
+      will: {
+        topic: "WillMsg",
+        payload: "Connection Closed abnormally..!",
+        qos: 0,
+        retain: false,
+      },
     },
   };
   React.useEffect(() => {

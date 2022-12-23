@@ -69,14 +69,14 @@ export default function Field({
           {addr.length > 35 ? `${addr.slice(0, 35)} ...` : addr}
         </div>
         <div className="flex mt-2">
-          <RoundIndicator value={data?.sensor0} />
+          <RoundIndicator value={data?.sensor0.toFixed(2)} />
           <div className="w-2"></div>
           <RoundIndicator
             title="Soil Moisture"
             isFloatValue={false}
             valueSuffix="%"
             minValue={0}
-            value={data?.sensor1}
+            value={data?.sensor1.toFixed(0)}
           />
         </div>
         <div className="mt-2">

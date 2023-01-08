@@ -5,6 +5,7 @@ An app helps to display agricultural data such as temperature, moisture, and pH 
 3. Cloud Server https://github.com/sarbbjeet/Agro-server
 4. Mobile App https://github.com/sarbbjeet/Agro-monitoring-app
 
+
 Even the authentication system aids in the management of different  dashboards. Every user has various dashboards based on the number of fields, 
 a rounded progress bar to display temperature and moisture data, and a button to operate sprinkler on/off status.
 
@@ -15,6 +16,15 @@ a rounded progress bar to display temperature and moisture data, and a button to
 <div>
  <img src="https://user-images.githubusercontent.com/9445093/211201133-b3c10a55-450e-41c1-8749-0206a1d4c6a2.jpg" width="900" height="500">  
 </div>
+
+## Architecture of the project 
+The image below depicts the overall architecture of the project, which includes sensor units, a gateway module, a cloud server, and a front user interface application.
+This project features LoRa communication, MQTT client/broker interaction, and database queries communicating with JSON API.
+
+
+<img width="716" alt="Screenshot 2023-01-04 at 10 40 32" src="https://user-images.githubusercontent.com/9445093/211218105-fccd1078-afa1-4744-a16c-c1dd53dca03f.png">
+
+
 
 ## Ready to use
 This server is hosted on the AWS cloud and may be reached via the domain address shown below.
